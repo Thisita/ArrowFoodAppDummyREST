@@ -19,9 +19,11 @@
 */
 'use strict';
 
+var response = {};
+
 // Route handling function
 function logout(req, res) {
-  res.send('{}');
+  res.send(JSON.stringify(response));
 }
 
 // Export the route association function

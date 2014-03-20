@@ -19,6 +19,8 @@
 */
 'use strict';
 
+var response = {};
+
 // Route handling function
 function login(req, res) {
   var json = JSON.parse(req.body);
@@ -26,7 +28,7 @@ function login(req, res) {
   if(json.username && json.password
     && json.username === 'username'
     && json.password === 'password') {
-    res.send('{}');
+    res.send(JSON.stringify(response));
   } else {
     res.send(401);
   }
