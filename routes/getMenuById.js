@@ -28,7 +28,7 @@ var response = {
 };
 
 // Route handling function
-function menu(req, res) {
+function menus(req, res) {
   if(response.id == req.params.menuId) {
     res.send(JSON.stringify(response));
   } else {
@@ -38,5 +38,5 @@ function menu(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/menu/:menuId', menu);
+  app.get('/menus/:menuId', menus);
 };

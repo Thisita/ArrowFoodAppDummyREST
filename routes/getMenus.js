@@ -50,5 +50,5 @@ function menu(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/menu', menu);
+  app.get('/menus', menus);
 };
