@@ -1,4 +1,7 @@
-﻿#    This file is part of ArrowFoodAppDummyREST.
+﻿#    ArrowFoodAppDummyREST
+#    Copyright © 2014 Ian Zachary Ledrick, also known as Thisita.
+#
+#    This file is part of ArrowFoodAppDummyREST.
 #
 #    ArrowFoodAppDummyREST is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
