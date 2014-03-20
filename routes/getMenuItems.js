@@ -36,7 +36,7 @@ var response = [
     id: 'id3',
     name: 'name',
     description: 'description',
-    price: 'priceRange'
+    price: 'price'
   }
 ];
 
