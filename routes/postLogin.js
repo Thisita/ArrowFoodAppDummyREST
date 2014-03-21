@@ -30,6 +30,7 @@ function login(req, res) {
       res.send(JSON.stringify(response));
     } else {
       res.send(401);
+    }
   } else {
     res.send(400);
   }
