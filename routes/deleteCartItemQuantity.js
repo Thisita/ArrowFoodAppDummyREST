@@ -27,7 +27,7 @@ var menuItemId = 1;
 // Route handling function
 function cart(req, res) {
   var quantity = parseInt(req.params.quantity);
-  if(!isNaN(quantity) {
+  if(!isNaN(quantity)) {
     if(req.params.menuId == menuId
       && req.params.itemId == itemId) {
       res.send(JSON.stringify(response));
