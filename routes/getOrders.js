@@ -26,6 +26,8 @@ var response = [
     coordinates: {
       latitude: -40.2030,
       longitude: 32.9394
+    },
+    cart: {
     }
   },
   {
@@ -34,6 +36,8 @@ var response = [
     coordinates: {
       latitude: -40.2030,
       longitude: 32.9394
+    },
+    cart: {
     }
   },
   {
@@ -42,6 +46,8 @@ var response = [
     coordinates: {
       latitude: -40.2030,
       longitude: 32.9394
+    },
+    cart: {
     }
   }
 ];
