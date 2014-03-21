@@ -44,7 +44,7 @@ var response = [
 ];
 
 // Route handling function
-function menu(req, res) {
+function menus(req, res) {
   res.send(JSON.stringify(response));
 }
 
