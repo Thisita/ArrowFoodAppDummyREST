@@ -29,7 +29,7 @@ function profile(req, res) {
   
   if(authenticated) {
     if(json.id && json.email && json.name
-      && json.address && json.phone)
+      && json.address && json.phone) {
       res.send(JSON.stringify(response));
     } else {
       res.send(400);
