@@ -21,7 +21,7 @@
 
 var response = {
   id: 1,
-  status: "status"
+  status: "status",
   coordinates: {
     latitude: -40.2030,
     longitude: 32.9394
