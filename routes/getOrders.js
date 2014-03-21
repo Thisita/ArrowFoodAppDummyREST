@@ -65,5 +65,5 @@ function orders(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/orders', orders);
+  app.get('/orders', orders);
 };
