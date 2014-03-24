@@ -19,7 +19,7 @@
 */
 'use strict';
 
-var url = 'mongodb://afdbuser:arrowfoodmyfoodisgreat@localhost/afdb';
+var url = 'mongodb://localhost/afdb';
 var db = require('mongoose');
 db.connect(url);
 

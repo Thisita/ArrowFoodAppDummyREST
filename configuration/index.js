@@ -30,9 +30,7 @@ module.exports = function(app, express, MongoStore) {
       maxAge: new Date(Date.now() + 3600000),
       store: new MongoStore({
         db: 'afdb',
-        host: 'localhost',
-        user: 'afdbuser',
-        password: 'arrowfoodmyfoodisgreat'
+        host: 'localhost'
       })
     }));
     // routing
