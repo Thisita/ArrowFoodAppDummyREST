@@ -30,7 +30,7 @@ var db = require('./database');
 
 // Delegate work
 require('./configuration')(app, express);
-require('./routes')(app);
+require('./routes')(app, db);
 
 // Listen
 app.listen(process.env.PORT || 8080);

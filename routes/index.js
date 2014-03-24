@@ -23,7 +23,7 @@
 var fs = require('fs');
 var path = require('path');
 
-module.exports = function(app) {
+module.exports = function(app, db) {
   // Look for route modules
   fs.readdirSync('./routes').forEach(function(file) {
     // Don't read this one again
