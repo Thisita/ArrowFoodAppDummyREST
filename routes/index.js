@@ -30,6 +30,6 @@ module.exports = function(app, db) {
     if(file === path.basename(__filename)) return;
     
     // Load the route file
-    require('./' + file)(app);
+    require('./' + file)(app, db);
   });
 };

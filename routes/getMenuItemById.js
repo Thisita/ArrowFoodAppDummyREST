@@ -40,6 +40,6 @@ function menuItems(req, res) {
 }
 
 // Export the route association function
-module.exports = function(app) {
+module.exports = function(app, db) {
   app.get('/menus/:menuId/items/:menuItemId', menuItems);
 };

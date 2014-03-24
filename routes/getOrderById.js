@@ -47,6 +47,6 @@ function orders(req, res) {
 }
 
 // Export the route association function
-module.exports = function(app) {
+module.exports = function(app, db) {
   app.post('/orders/:orderId', orders);
 };
