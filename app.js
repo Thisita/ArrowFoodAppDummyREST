@@ -25,6 +25,9 @@ var express = require('express');
 // Create the app
 var app = module.exports = express();
 
+// Get db instance
+var db = require('./database');
+
 // Delegate work
 require('./configuration')(app, express);
 require('./routes')(app);
