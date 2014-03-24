@@ -19,8 +19,8 @@
 */
 'use strict';
 
-var url = "afdb"; // arrow food db
-var collections = ["sessions", "users", "orders"]
-var db = require("mongojs").connect(url, collections);
+var url = 'mongodb://afdbuser:arrowfoodmyfoodisgreat@localhost/afdb';
+var db = require('mongoose');
+db.connect(url);
 
 module.exports = db;

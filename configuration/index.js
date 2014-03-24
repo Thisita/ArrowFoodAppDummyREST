@@ -19,10 +19,24 @@
 */
 'use strict';
 
-module.exports = function(app, express) {
+module.exports = function(app, express, MongoStore) {
   // global config
   app.configure(function() {
     app.use(express.logger());
+    // session
+    app.use(express.cookieParser());
+    app.use(express.session({
+      secret: 'random_data',
+      maxAge: new Date(Date.now() + 3600000),
+      store: new MongoStore({
+        db: 'afdb',
+        host: 'localhost',
+        user: 'afdbuser',
+        password: 'arrowfoodmyfoodisgreat'
+      })
+    }));
+    // routing
+    app.use(app.router);
   });
   
   // dev config
