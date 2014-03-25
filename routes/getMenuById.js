@@ -37,6 +37,6 @@ function menus(req, res) {
 }
 
 // Export the route association function
-module.exports = function(app, db) {
+module.exports = function(app) {
   app.get('/menus/:menuId', menus);
 };

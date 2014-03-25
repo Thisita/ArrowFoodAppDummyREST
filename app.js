@@ -21,7 +21,6 @@
 
 // Imports
 var express = require('express');
-var MongoStore = require('connect-mongo')(express);
 
 // Create the app
 var app = module.exports = express();
@@ -30,7 +29,7 @@ var app = module.exports = express();
 var db = require('./database');
 
 // Delegate work
-require('./configuration')(app, express, MongoStore);
+require('./configuration')(app, express);
 require('./routes')(app, db);
 
 // Listen

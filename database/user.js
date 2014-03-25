@@ -19,27 +19,21 @@
 */
 'use strict';
 
-var response = {};
+var mongoose = require('mongoose');
 
-var menuId = 1;
-var menuItemId = 1;
+var userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  salt: String,
+  role: String,
+  email: String,
+  name: String,
+  address1: String,
+  address2: String,
+  city: String,
+  state: String,
+  zip: String,
+  createdOn: Date
+});
 
-// Route handling function
-function cart(req, res) {
-  var quantity = parseInt(req.params.quantity);
-  if(!isNaN(quantity)) {
-    if(req.params.menuId == menuId
-      && req.params.itemId == itemId) {
-      res.send(JSON.stringify(response));
-    } else {
-      res.send(404);
-    }
-  } else {
-    res.send(400);
-  }
-}
-
-// Export the route association function
-module.exports = function(app) {
-  app.delete('/cart/:menuId/:itemId/:quantity', cart);
-};
+var User = module.exports = mongoose.model('User', userSchema);

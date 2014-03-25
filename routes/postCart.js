@@ -40,6 +40,6 @@ function cart(req, res) {
 }
 
 // Export the route association function
-module.exports = function(app, db) {
+module.exports = function(app) {
   app.post('/cart/:menuId/:itemId/:quantity', cart);
 };

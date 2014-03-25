@@ -20,7 +20,29 @@
 'use strict';
 
 var url = 'mongodb://localhost/afdb';
-var db = require('mongoose');
-db.connect(url);
+var mongoose = require('mongoose');
+mongoose.connect(url);
 
-module.exports = db;
+// Handle events
+mongoose.connection.on('connected', function() {
+  console.log('Mongoose default connection open to ' + url);
+});
+
+mongoose.connection.on('error', function(err) {
+  console.log('Mongoose default connection error: ' err);
+});
+
+mongoose.connection.on('disconnected', function() {
+  console.log('Mongoose default connection disconnected');
+});
+
+// Kill the connection if the process ends
+process.on('SIGINT', function() {
+  mongoose.connection.close(function() {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
+// Import all the schemas and models
+require('./user');

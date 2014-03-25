@@ -19,7 +19,8 @@
 */
 'use strict';
 
-module.exports = function(app, express, MongoStore) {
+module.exports = function(app, express) {
+  var MongoStore = require('connect-mongo')(express);
   // global config
   app.configure(function() {
     app.use(express.logger());

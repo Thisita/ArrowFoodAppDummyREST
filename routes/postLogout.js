@@ -29,6 +29,6 @@ function logout(req, res) {
 }
 
 // Export the route association function
-module.exports = function(app, db) {
+module.exports = function(app) {
   app.post('/logout', logout);
 };
