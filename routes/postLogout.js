@@ -23,6 +23,8 @@ var response = {};
 
 // Route handling function
 function logout(req, res) {
+  req.session.authenticated = false;
+  req.session.user = null;
   res.send(JSON.stringify(response));
 }
 
