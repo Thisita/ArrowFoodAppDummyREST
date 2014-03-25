@@ -21,22 +21,29 @@
 
 var response = {};
 
+var database = null;
+
 // Route handling function
 function login(req, res) {
   var json = JSON.parse(req.body);
-  if(json.username && json.password) {
-    if(json.username === 'username'
-      && json.password === 'password') {
-      res.send(JSON.stringify(response));
+  if(database) {
+    if(json.username && json.password) {
+      if(json.username === 'username'
+        && json.password === 'password') {
+        res.send(JSON.stringify(response));
+      } else {
+        res.send(401);
+      }
     } else {
-      res.send(401);
+      res.send(400);
     }
   } else {
-    res.send(400);
+    res.send(500);
   }
 }
 
 // Export the route association function
 module.exports = function(app, db) {
+  database = db;
   app.post('/login', login);
 };
