@@ -21,13 +21,11 @@
 
 var response = {};
 
-var authenticated = true;
-
 // Route handling function
 function profile(req, res) {
   var json = JSON.parse(req.body);
   
-  if(authenticated) {
+  if(req.session.authenticated) {
     if(json.id && json.email && json.name
       && json.address && json.phone) {
       res.send(JSON.stringify(response));
