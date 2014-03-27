@@ -19,6 +19,9 @@
 */
 'use strict';
 
+var mongoose = require('mongoose');
+var Cart = mongoose.model('Cart');
+
 var response = [
   {
     menuId: "1",
@@ -34,7 +37,17 @@ var response = [
 
 // Route handling function
 function cart(req, res) {
-  res.send(JSON.stringify(response));
+  if(req.session.authenticated) {
+    Cart.findOne({'username' : req.session.username}, function(err, cart) {
+      if(cart) {
+        res.send(JSON.stringify(cart));
+      } else {
+        res.send(404);
+      }
+    });
+  } else {
+    //TODO
+  }
 }
 
 // Export the route association function
