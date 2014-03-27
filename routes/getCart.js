@@ -19,6 +19,7 @@
 */
 'use strict';
 
+// Mongoose imports
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 
@@ -38,10 +39,13 @@ var response = [
 // Route handling function
 function cart(req, res) {
   if(req.session.authenticated) {
+    // Find the user's cart
     Cart.findOne({'username' : req.session.username}, function(err, cart) {
       if(cart) {
+        // Send the cart
         res.send(JSON.stringify(cart));
       } else {
+        // Could not find the cart
         res.send(404);
       }
     });
