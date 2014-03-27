@@ -19,6 +19,7 @@
 */
 'use strict';
 
+// Mongoose imports
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -30,13 +31,12 @@ var response = {
   phone: 'phone'
 };
 
-var authenticated = true;
-
 // Route handling function
 function profile(req, res) {
   var json = JSON.parse(req.body);
   
-  if(authenticated) {
+  // Check session authentication
+  if(req.session.authenticated) {
     res.send(JSON.stringify(response));
   } else {
     res.send(401);
