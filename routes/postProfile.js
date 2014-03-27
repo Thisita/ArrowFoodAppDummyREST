@@ -31,7 +31,13 @@ function profile(req, res) {
   if(req.session.authenticated) {
     if(json.id && json.email && json.name
       && json.address && json.phone) {
-      res.send(JSON.stringify(response));
+      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user){
+        if(user) {
+          res.send(JSON.stringify(user));
+        } else {
+          res.send(404);
+        }
+      });
     } else {
       res.send(400);
     }
