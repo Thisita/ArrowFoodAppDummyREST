@@ -39,12 +39,20 @@ var phoneSchema = new mongoose.Schema({
   number: String
 });
 
+// A schema for email
+var emailSchema = new mongoose.Schema({
+  name: String,
+  address: String
+});
+
 // The restaurant schema
 // Picture is base64 encoded
 var restaurantSchema = new mongoose.Schema({
   name: String,
-  email: String,
   picture: String,
+  description: String,
+  tags: [String],
+  emails: [emailSchema],
   phones: [phoneSchema],
   addresses: [addressSchema],
   createdOn: Date,
