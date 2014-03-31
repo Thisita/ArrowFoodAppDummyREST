@@ -51,6 +51,27 @@ function user(req, res) {
   } else {
     // TODO: Implement functionality to
     // register a user
+    
+    // Check to see if enough data is provided to register a user
+    if(json.username && json.email && json.name && json.password) {
+      // Check and see if the username exists
+      User.find({ 'username' : json.username }, function(err, userData) {
+        if(userData) {
+          // The username exists, error out
+          res.send(JSON.stringify('{"error":"Username already in use"}'));
+        } else {
+          // Check and see if email exists
+          User.find({ 'email' : json.email }, function(err, userData2) {
+            if(userData2) {
+              // The email exists, error out
+              res.send(JSON.stringify('{"error":"Email already in use"}'));
+            } else {
+              // TODO: Register the user
+            }
+          });
+        }
+      });
+    }
     res.send(501);
   }
 }
