@@ -49,8 +49,9 @@ function user(req, res) {
       res.send(400);
     }
   } else {
-    // Unauthorized
-    res.send(401);
+    // TODO: Implement functionality to
+    // register a user
+    res.send(501);
   }
 }
 
