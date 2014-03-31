@@ -26,7 +26,7 @@ var User = mongoose.model('User');
 var response = {};
 
 // Route handling function
-function profile(req, res) {
+function user(req, res) {
   var json = JSON.parse(req.body);
   
   // Check session authentication
@@ -35,10 +35,10 @@ function profile(req, res) {
       && json.address && json.phone) {
       
       // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user){
-        if(user) {
+      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, userData){
+        if(userData) {
           // Send profile
-          res.send(JSON.stringify(user));
+          res.send(JSON.stringify(userData));
         } else {
           // Could not find the profile
           res.send(404);
@@ -56,5 +56,5 @@ function profile(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/profile', profile);
+  app.post('/user', user);
 };
