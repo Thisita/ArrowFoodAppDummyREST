@@ -55,7 +55,7 @@ var userSchema = new mongoose.Schema({
   name: String,
   phones: [phoneSchema],
   addresses: [addressSchema],
-  createdOn: { type: Date, default: Date.now
+  createdOn: { type: Date, default: Date.now }
 });
 
 var User = module.exports = mongoose.model('User', userSchema);
