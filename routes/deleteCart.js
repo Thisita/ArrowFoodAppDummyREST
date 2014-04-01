@@ -19,6 +19,10 @@
 */
 'use strict';
 
+// Mongoose imports
+var mongoose = require('mongoose');
+var Cart = mongoose.model('Cart');
+
 // Route handling function
 function cart(req, res) {
   res.send(JSON.stringify(response));
