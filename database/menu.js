@@ -39,7 +39,7 @@ var menuItemOptionSchema = new mongoose.Schema({
 var menuItemSchema = new mongoose.Schema({
   name: String,
   price: Number,
-  picture: Buffer,
+  image: Buffer,
   tags: [String],
   options: [menuItemOptionSchema],
   description: String,
