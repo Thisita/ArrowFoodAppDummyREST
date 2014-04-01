@@ -53,6 +53,7 @@ var emailSchema = new mongoose.Schema({
 var restaurantSchema = new mongoose.Schema({
   name: String,
   image: Buffer,
+  icon: Buffer,
   description: String,
   tags: [String],
   emails: [emailSchema],
