@@ -25,13 +25,13 @@ var mongoose = require('mongoose');
 var orderStatusSchema = new mongoose.Schema({
   authority: String,
   state: String,
-  createdOn: Date,
+  created: Date,
 });
 
 // Schema for the order
 var orderSchema = new mongoose.Schema({
   username: String,
-  createdOn: Date,
+  created: Date,
   billing: {
     address1: String,
     address2: String,
