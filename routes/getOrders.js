@@ -56,11 +56,9 @@ var response = [
   }
 ];
 
-var authenticated = true;
-
 // Route handling function
 function orders(req, res) {
-  if(authenticated) {
+  if(req.session.authenticated) {
     res.send(JSON.stringify(response));
   } else {
     res.send(401);
