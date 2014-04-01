@@ -49,7 +49,7 @@ var menuSchema = new mongoose.Schema({
   restaurant: String,
   items: [menuItemSchema],
   lastUpdated: Date,
-  createdOn: Date
+  created: Date
 });
 
 // Export the schema
