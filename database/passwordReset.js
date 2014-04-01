@@ -26,8 +26,8 @@ var mongoose = require('mongoose');
 var passwordResetSchema = new mongoose.Schema({
   username: String,
   token: String,
-  expiration: Date,
-  createdOn: Date
+  expiration: { type: Date, default: Date.now },
+  created: { type: Date, default: Date.now }
 });
 
 // Export the schema
