@@ -30,7 +30,7 @@ var menuItemOptionSchema = new mongoose.Schema({
   name: String,
   description: String,
   type: String,
-  defaultValue: String,
+  default: String,
   created: { type: Date, default: Date.now }
 });
 
