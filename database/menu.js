@@ -50,6 +50,7 @@ var menuItemSchema = new mongoose.Schema({
 
 // Schema for menu
 var menuSchema = new mongoose.Schema({
+  name: String,
   restaurant: String,
   image: Buffer,
   icon: Buffer,
