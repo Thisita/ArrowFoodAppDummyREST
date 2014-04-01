@@ -32,7 +32,8 @@ var addressSchema = new mongoose.Schema({
   state: String,
   zip: String,
   defaultBilling: Boolean,
-  defaultShipping: Boolean
+  defaultShipping: Boolean,
+  createdOn: { type: Date, default: Date.now }
 });
 
 // A schema for phone/fax
@@ -40,7 +41,8 @@ var addressSchema = new mongoose.Schema({
 var phoneSchema = new mongoose.Schema({
   name: String,
   number: String,
-  default: Boolean
+  default: Boolean,
+  createdOn: { type: Date, default: Date.now }
 });
 
 // The User schema
