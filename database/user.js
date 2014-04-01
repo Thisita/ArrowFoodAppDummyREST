@@ -61,8 +61,8 @@ var userSchema = new mongoose.Schema({
   addresses: [addressSchema],
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
-  orders: Number,
-  deliveries: Number
+  orders: { type: Number, default: 0 },
+  deliveries: { type: Number, default: 0 }
 });
 
 var User = module.exports = mongoose.model('User', userSchema);
