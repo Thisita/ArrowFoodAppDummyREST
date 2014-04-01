@@ -42,7 +42,7 @@ var menuItemSchema = new mongoose.Schema({
   image: Buffer,
   icon: Buffer,
   tags: [String],
-  options: [menuItemOptionSchema],
+  itemOptions: [menuItemOptionSchema],
   description: String,
   created: { type: Date, default: Date.now },
   orders: { type: Number, default: 0 }
