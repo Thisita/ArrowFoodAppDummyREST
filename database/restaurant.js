@@ -30,7 +30,7 @@ var addressSchema = new mongoose.Schema({
   city: String,
   state: String,
   zip: String,
-  createdOn: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now }
 });
 
 // A schema for phone/fax
@@ -38,7 +38,7 @@ var addressSchema = new mongoose.Schema({
 var phoneSchema = new mongoose.Schema({
   name: String,
   number: String,
-  createdOn: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now }
 });
 
 // A schema for email
@@ -58,7 +58,7 @@ var restaurantSchema = new mongoose.Schema({
   emails: [emailSchema],
   phones: [phoneSchema],
   addresses: [addressSchema],
-  createdOn: { type: Date, default: Date.now},
+  created: { type: Date, default: Date.now},
   updated: { type: Date, default: Date.now}
 });
 
