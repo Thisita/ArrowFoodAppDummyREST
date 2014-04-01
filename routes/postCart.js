@@ -19,6 +19,10 @@
 */
 'use strict';
 
+// Mongoose imports
+var mongoose = require('mongoose');
+var Cart = mongoose.model('Cart');
+
 var response = {};
 
 var menuId = 1;
