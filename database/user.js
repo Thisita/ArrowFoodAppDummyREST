@@ -46,6 +46,7 @@ var phoneSchema = new mongoose.Schema({
 });
 
 // The User schema
+// Images are png buffers
 var userSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -53,6 +54,8 @@ var userSchema = new mongoose.Schema({
   role: String,
   email: String,
   name: String,
+  image: Buffer,
+  icon: Buffer,
   phones: [phoneSchema],
   addresses: [addressSchema],
   created: { type: Date, default: Date.now },
