@@ -39,7 +39,8 @@ var addressSchema = new mongoose.Schema({
 // Gets a name for user search eg "Fax", "Carryout", "Headquarters"
 var phoneSchema = new mongoose.Schema({
   name: String,
-  number: String
+  number: String,
+  default: Boolean
 });
 
 // The User schema
