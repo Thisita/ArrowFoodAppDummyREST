@@ -49,9 +49,6 @@ function user(req, res) {
       res.send(400);
     }
   } else {
-    // TODO: Implement functionality to
-    // register a user
-    
     // Check to see if enough data is provided to register a user
     if(json.username && json.email && json.name && json.password) {
       // Check and see if the username exists
@@ -61,18 +58,34 @@ function user(req, res) {
           res.send(JSON.stringify('{"error":"Username already in use"}'));
         } else {
           // Check and see if email exists
-          User.find({ 'email' : json.email }, function(err, userData2) {
+          User.find({ 'email' : json.email }, function(err2, userData2) {
             if(userData2) {
               // The email exists, error out
               res.send(JSON.stringify('{"error":"Email already in use"}'));
             } else {
-              // TODO: Register the user
+              // Create a new user
+              var a = new User();
+              a.username = json.username;
+              a.email = json.email;
+              a.name = json.name;
+              a.role = 'customer';
+              a.phones = json.phones; // Might have to deep copy
+              a.addresss = json.addresss; // Might have to deep copy
+              a.salt = something;
+              a.save(function(err3, a, count) {
+                if(err || count !== 1) {
+                  // Something broke so tell the user
+                  res.send(500);
+                } else {
+                  // Send a success response
+                  res.send('{"error":false}');
+                }
+              });
             }
           });
         }
       });
     }
-    res.send(501);
   }
 }
 
