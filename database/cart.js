@@ -32,7 +32,7 @@ var cartItemSchema = new mongoose.Schema({
 var cartSchema = new mongoose.Schema({
   username: String,
   created: Date,
-  lastUpdate: Date,
+  updated: Date,
   items: [cartItemSchema]
 });
 
