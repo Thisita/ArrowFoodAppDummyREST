@@ -20,6 +20,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var CartSchema = mongoose.model('Cart').schema;
 
 // Schema for status items
 var orderStatusSchema = new mongoose.Schema({
@@ -47,7 +48,7 @@ var orderSchema = new mongoose.Schema({
     zip: String
   },
   updates: [orderStatusSchema],
-  cart: mongoose.model('Cart'),
+  cart: [CartSchema], // this is a dirty, dirty DIRTY hack
   rating: Number,
   comment: String
 });
