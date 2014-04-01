@@ -29,20 +29,23 @@ var addressSchema = new mongoose.Schema({
   line2: String,
   city: String,
   state: String,
-  zip: String
+  zip: String,
+  createdOn: { type: Date, default: Date.now }
 });
 
 // A schema for phone/fax
 // Gets a name for user search eg "Fax", "Carryout", "Headquarters"
 var phoneSchema = new mongoose.Schema({
   name: String,
-  number: String
+  number: String,
+  createdOn: { type: Date, default: Date.now }
 });
 
 // A schema for email
 var emailSchema = new mongoose.Schema({
   name: String,
-  address: String
+  address: String,
+  createdOn: { type: Date, default: Date.now }
 });
 
 // The restaurant schema
@@ -55,8 +58,8 @@ var restaurantSchema = new mongoose.Schema({
   emails: [emailSchema],
   phones: [phoneSchema],
   addresses: [addressSchema],
-  createdOn: Date,
-  lastUpdated: Date
+  createdOn: { type: Date, default: Date.now},
+  updated: { type: Date, default: Date.now}
 });
 
 // Export the schema
