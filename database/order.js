@@ -25,7 +25,7 @@ var mongoose = require('mongoose');
 var orderStatusSchema = new mongoose.Schema({
   authority: String,
   state: String,
-  created: { type: Date, default: Date.now },
+  created: { type: Date, default: Date.now }
 });
 
 // Schema for the order
