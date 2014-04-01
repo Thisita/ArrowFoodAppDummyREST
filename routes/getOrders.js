@@ -19,6 +19,10 @@
 */
 'use strict';
 
+// Mongoose imports
+var mongoose = require('mongoose');
+var Orders = mongoose.model('Orders');
+
 var response = [
   {
     id: 1,
