@@ -38,6 +38,7 @@ var cartSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
   items: [cartItemSchema],
+  coupons: [String],
   total: Number
 });
 
