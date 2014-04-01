@@ -25,7 +25,23 @@ var Cart = mongoose.model('Cart');
 
 // Route handling function
 function cart(req, res) {
-  res.send(JSON.stringify(response));
+  Cart.findOne({'username' : req.session.username}, function(err, cart) {
+    if(cart) {
+        // Send the cart
+        cart.remove(function(err1, cart) {
+           if (err1) {
+            // Server error
+            res.send(500);
+           } else {
+            // Return success
+            res.send('{"error":false}');
+           }
+        });
+      } else {
+        // Could not find the cart
+        res.send(404);
+      }
+  }
 }
 
 // Export the route association function
