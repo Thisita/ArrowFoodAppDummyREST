@@ -50,8 +50,8 @@ var menuItemSchema = new mongoose.Schema({
 var menuSchema = new mongoose.Schema({
   restaurant: String,
   items: [menuItemSchema],
-  updated: Date,
-  created: Date
+  updated: { type: Date, default: Date.now },
+  created: { type: Date, default: Date.now }
 });
 
 // Export the schema
