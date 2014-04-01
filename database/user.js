@@ -19,8 +19,28 @@
 */
 'use strict';
 
+// Import the mongoose
 var mongoose = require('mongoose');
 
+// A schema for address
+// They get a nickname for user search purposes
+var addressSchema = new mongoose.Schema({
+  name: String,
+  line1: String,
+  line2: String,
+  city: String,
+  state: String,
+  zip: String
+});
+
+// A schema for phone/fax
+// Gets a name for user search eg "Fax", "Carryout", "Headquarters"
+var phoneSchema = new mongoose.Schema({
+  name: String,
+  number: String
+});
+
+// The User schema
 var userSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -28,11 +48,8 @@ var userSchema = new mongoose.Schema({
   role: String,
   email: String,
   name: String,
-  address1: String,
-  address2: String,
-  city: String,
-  state: String,
-  zip: String,
+  phones: [phoneSchema],
+  addresses: [addressSchema],
   createdOn: Date
 });
 
