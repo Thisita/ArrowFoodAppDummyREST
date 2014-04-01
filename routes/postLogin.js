@@ -83,7 +83,7 @@ function login(req, res) {
             // no account
             res.send(404);
           }
-        }
+        });
       } else {
         // log failure
         console.log('Failed login attempt for ' + json.username + ' (invalid username)');
