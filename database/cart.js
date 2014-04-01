@@ -25,7 +25,9 @@ var mongoose = require('mongoose');
 var cartItemSchema = new mongoose.Schema({
   menuId: String,
   itemId: String,
-  quantity: Number
+  quantity: Number,
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now }
 });
 
 // Schema for the cart itself
