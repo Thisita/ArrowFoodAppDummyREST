@@ -46,7 +46,7 @@ var orderSchema = new mongoose.Schema({
     state: String,
     zip: String
   },
-  status: [orderStatusSchema],
+  updates: [orderStatusSchema],
   cart: mongoose.model('Cart')
 });
 
