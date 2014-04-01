@@ -31,7 +31,8 @@ var couponSchema = new mongoose.Schema({
   type: String,
   param: String,
   updated: { type: Date, default: Date.now },
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  claims: { type: Number, default: 0 }
 });
 
 // Export the schema
