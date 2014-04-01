@@ -45,4 +45,12 @@ process.on('SIGINT', function() {
 });
 
 // Import all the schemas and models
+require('./achievement');
+require('./cart');
+require('./coupon');
+require('./geotag');
+require('./menu');
+require('./order');
+require('./passwordReset');
+require('./restaurant');
 require('./user');
