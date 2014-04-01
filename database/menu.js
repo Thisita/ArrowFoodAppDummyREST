@@ -44,7 +44,8 @@ var menuItemSchema = new mongoose.Schema({
   tags: [String],
   options: [menuItemOptionSchema],
   description: String,
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  orders: { type: Number, default: 0 }
 });
 
 // Schema for menu
@@ -55,7 +56,8 @@ var menuSchema = new mongoose.Schema({
   items: [menuItemSchema],
   tags: [String],
   updated: { type: Date, default: Date.now },
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  orders: { type: Number, default: 0 }
 });
 
 // Export the schema
