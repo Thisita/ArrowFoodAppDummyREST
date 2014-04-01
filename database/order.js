@@ -33,15 +33,15 @@ var orderSchema = new mongoose.Schema({
   username: String,
   created: Date,
   billing: {
-    address1: String,
-    address2: String,
+    line1: String,
+    line2: String,
     city: String,
     state: String,
     zip: String
   },
   shipping: {
-    address1: String,
-    address2: String,
+    line1: String,
+    line2: String,
     city: String,
     state: String,
     zip: String
