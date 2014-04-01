@@ -56,6 +56,7 @@ var userSchema = new mongoose.Schema({
   name: String,
   image: Buffer,
   icon: Buffer,
+  achievements: [String],
   phones: [phoneSchema],
   addresses: [addressSchema],
   created: { type: Date, default: Date.now },
