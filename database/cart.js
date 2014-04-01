@@ -31,8 +31,8 @@ var cartItemSchema = new mongoose.Schema({
 // Schema for the cart itself
 var cartSchema = new mongoose.Schema({
   username: String,
-  created: Date,
-  updated: Date,
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now },
   items: [cartItemSchema]
 });
 
