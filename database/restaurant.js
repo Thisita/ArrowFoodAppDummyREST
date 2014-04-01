@@ -49,10 +49,10 @@ var emailSchema = new mongoose.Schema({
 });
 
 // The restaurant schema
-// Image is base64 encoded
+// images are png
 var restaurantSchema = new mongoose.Schema({
   name: String,
-  image: String,
+  image: Buffer,
   description: String,
   tags: [String],
   emails: [emailSchema],
