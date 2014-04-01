@@ -31,7 +31,7 @@ var cartItemSchema = new mongoose.Schema({
 // Schema for the cart itself
 var cartSchema = new mongoose.Schema({
   username: String,
-  createdOn: Date,
+  created: Date,
   lastUpdate: Date,
   items: [cartItemSchema]
 });
