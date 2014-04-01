@@ -35,13 +35,11 @@ var menuItemOptionSchema = new mongoose.Schema({
 });
 
 // Schema for menu items
-// Picture is a base64 encoded png
-// we could use a Buffer type, but
-// it is believed that it uses more space
+// Picture is png
 var menuItemSchema = new mongoose.Schema({
   name: String,
   price: Number,
-  picture: String,
+  picture: Buffer,
   tags: [String],
   options: [menuItemOptionSchema],
   description: String,
