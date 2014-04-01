@@ -60,7 +60,8 @@ var restaurantSchema = new mongoose.Schema({
   phones: [phoneSchema],
   addresses: [addressSchema],
   created: { type: Date, default: Date.now},
-  updated: { type: Date, default: Date.now}
+  updated: { type: Date, default: Date.now},
+  orders: { type: Number, default: 0 }
 });
 
 // Export the schema
