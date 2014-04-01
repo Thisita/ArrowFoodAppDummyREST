@@ -48,7 +48,7 @@ var menuItemSchema = new mongoose.Schema({
 var menuSchema = new mongoose.Schema({
   restaurant: String,
   items: [menuItemSchema],
-  lastUpdated: Date,
+  updated: Date,
   created: Date
 });
 
