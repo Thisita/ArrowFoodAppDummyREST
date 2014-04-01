@@ -25,13 +25,13 @@ var mongoose = require('mongoose');
 var orderStatusSchema = new mongoose.Schema({
   authority: String,
   state: String,
-  created: Date,
+  created: { type: Date, default: Date.now },
 });
 
 // Schema for the order
 var orderSchema = new mongoose.Schema({
   username: String,
-  created: Date,
+  created: { type: Date, default: Date.now },
   billing: {
     line1: String,
     line2: String,
