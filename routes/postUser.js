@@ -23,6 +23,22 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+// Some parameters for the pbkdf2
+var saltSize = 128;
+var rounds = 10000;
+var keylen = 2048;
+
+// Helper to encode base64
+function encode(text) {
+  return new Buffer(text, 'utf8').toString('base64');
+}
+
+// Helper decode base64
+function decode(text) {
+  // yay buffers
+  return new Buffer(text, 'base64').toString('utf8');
+}
+
 var response = {};
 
 // Route handling function
@@ -71,14 +87,26 @@ function user(req, res) {
               a.role = 'customer';
               a.phones = json.phones; // Might have to deep copy
               a.addresss = json.addresss; // Might have to deep copy
-              a.salt = something;
-              a.save(function(err3, a, count) {
-                if(err || count !== 1) {
+              // Generate the salt
+              a.salt = crypto.randomBytes(saltSize).toString('base64');
+              // PBKDF2 hash the password
+              crypto.pbkdf2(json.password, decode(a.salt), iterations, keylen, function(err3, derivedKey) {
+                // Make sure the crypto didn't die
+                if(derivedKey) {
+                  // Store the hashed password
+                  a.password = encode(derivedKey);
+                  a.save(function(err4, a, count) {
+                    if(err4 || count !== 1) {
+                      // Something broke so tell the user
+                      res.send(500);
+                    } else {
+                      // Send a success response
+                      res.send('{"error":false}');
+                    }
+                  });
+                } else {
                   // Something broke so tell the user
                   res.send(500);
-                } else {
-                  // Send a success response
-                  res.send('{"error":false}');
                 }
               });
             }
