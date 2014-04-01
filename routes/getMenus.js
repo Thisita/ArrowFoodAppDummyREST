@@ -32,7 +32,7 @@ function menus(req, res) {
       // Could not find the menus
       res.send(404);
     }
-  }
+  });
 }
 
 // Export the route association function

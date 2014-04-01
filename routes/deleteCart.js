@@ -41,7 +41,7 @@ function cart(req, res) {
         // Could not find the cart
         res.send(404);
       }
-  }
+  });
 }
 
 // Export the route association function

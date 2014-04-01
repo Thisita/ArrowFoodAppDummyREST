@@ -41,7 +41,7 @@ function profile(req, res) {
       && json.address && json.phone) {
       
       // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user){
+      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user) {
         if(user) {
           // Send profile
           res.send(JSON.stringify(user));

@@ -34,7 +34,7 @@ function orders(req, res) {
         // Could not find the orders
         res.send(404);
       }
-    }
+    });
   } else {
     // Unauthorized
     res.send(401);
