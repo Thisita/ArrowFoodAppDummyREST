@@ -21,46 +21,22 @@
 
 // Mongoose imports
 var mongoose = require('mongoose');
-var Orders = mongoose.model('Orders');
-
-var response = [
-  {
-    id: 1,
-    status: "status",
-    coordinates: {
-      latitude: -40.2030,
-      longitude: 32.9394
-    },
-    cart: {
-    }
-  },
-  {
-    id: 1,
-    status: "status",
-    coordinates: {
-      latitude: -40.2030,
-      longitude: 32.9394
-    },
-    cart: {
-    }
-  },
-  {
-    id: 1,
-    status: "status",
-    coordinates: {
-      latitude: -40.2030,
-      longitude: 32.9394
-    },
-    cart: {
-    }
-  }
-];
+var Order = mongoose.model('Order');
 
 // Route handling function
 function orders(req, res) {
   if(req.session.authenticated) {
-    res.send(JSON.stringify(response));
+    Order.find({'username' : req.session.username}, function(err, orders) {
+      if (orders) {
+        // Send the orders
+        res.send(JSON.stringify(orders));
+      } else {
+        // Could not find the orders
+        res.send(404);
+      }
+    }
   } else {
+    // Unauthorized
     res.send(401);
   }
 }
