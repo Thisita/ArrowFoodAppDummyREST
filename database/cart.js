@@ -19,6 +19,7 @@
 */
 'use strict';
 
+// Import mongoose
 var mongoose = require('mongoose');
 
 // Schema for the items in the cart
@@ -26,6 +27,7 @@ var cartItemSchema = new mongoose.Schema({
   menuId: String,
   itemId: String,
   quantity: Number,
+  total: Number,
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now }
 });
@@ -35,7 +37,8 @@ var cartSchema = new mongoose.Schema({
   username: String,
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
-  items: [cartItemSchema]
+  items: [cartItemSchema],
+  total: Number
 });
 
 // Export the schema
