@@ -30,7 +30,9 @@ var addressSchema = new mongoose.Schema({
   line2: String,
   city: String,
   state: String,
-  zip: String
+  zip: String,
+  defaultBilling: Boolean,
+  defaultShipping: Boolean
 });
 
 // A schema for phone/fax
