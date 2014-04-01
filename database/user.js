@@ -60,7 +60,9 @@ var userSchema = new mongoose.Schema({
   phones: [phoneSchema],
   addresses: [addressSchema],
   created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now }
+  updated: { type: Date, default: Date.now },
+  orders: Number,
+  deliveries: Number
 });
 
 var User = module.exports = mongoose.model('User', userSchema);
