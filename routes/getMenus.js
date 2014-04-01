@@ -21,35 +21,18 @@
 
 // Mongoose imports
 var mongoose = require('mongoose');
-var Menus = mongoose.model('Menus');
-
-var response = [
-  {
-    id: 'id1',
-    name: 'name',
-    description: 'description',
-    cuisine: 'cuisine',
-    priceRange: 'priceRange'
-  },
-  {
-    id: 'id2',
-    name: 'name',
-    description: 'description',
-    cuisine: 'cuisine',
-    priceRange: 'priceRange'
-  },
-  {
-    id: 'id3',
-    name: 'name',
-    description: 'description',
-    cuisine: 'cuisine',
-    priceRange: 'priceRange'
-  }
-];
+var Menu = mongoose.model('Menu');
 
 // Route handling function
 function menus(req, res) {
-  res.send(JSON.stringify(response));
+  Menu.find({}, function(err, menus) {
+    if (menus) {
+      res.send(JSON.stringify(menus));
+    } else {
+      // Could not find the menus
+      res.send(404);
+    }
+  }
 }
 
 // Export the route association function
