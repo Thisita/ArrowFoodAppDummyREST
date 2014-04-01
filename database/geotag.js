@@ -28,7 +28,7 @@ var geotagSchema = new mongoose.Schema({
   username: String,
   latitude: Number,
   longitude: Number,
-  created: Date
+  created: { type: Date, default: Date.now }
 });
 
 // Export the schema
