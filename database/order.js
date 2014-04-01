@@ -47,7 +47,9 @@ var orderSchema = new mongoose.Schema({
     zip: String
   },
   updates: [orderStatusSchema],
-  cart: mongoose.model('Cart')
+  cart: mongoose.model('Cart'),
+  rating: Number,
+  comment: String
 });
 
 // Export the schema
