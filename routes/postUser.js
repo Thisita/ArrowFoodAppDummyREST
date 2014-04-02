@@ -70,15 +70,21 @@ function user(req, res) {
       // Check and see if the username exists
       User.find({ 'username' : json.username }, function(err, userData) {
         if(userData) {
+          // log info
+          console.log("INFO: Username already taken " + json.username);
           // The username exists, error out
           res.send(JSON.stringify('{"error":"Username already in use"}'));
         } else {
           // Check and see if email exists
           User.find({ 'email' : json.email }, function(err2, userData2) {
             if(userData2) {
+              // log info
+              console.log("INFO: Email already taken " + json.email);
               // The email exists, error out
               res.send(JSON.stringify('{"error":"Email already in use"}'));
             } else {
+              // log info
+              console.log("INFO: Creating user " + json.username);
               // Create a new user
               var a = new User();
               a.username = json.username;
@@ -97,14 +103,20 @@ function user(req, res) {
                   a.password = encode(derivedKey);
                   a.save(function(err4, a, count) {
                     if(err4 || count !== 1) {
+                      // log error
+                      console.log("ERROR: " + err4);
                       // Something broke so tell the user
                       res.send(500);
                     } else {
+                      // log info
+                      console.log("INFO: User " + a.username + " created");
                       // Send a success response
                       res.send('{"error":false}');
                     }
                   });
                 } else {
+                  // log error
+                  console.log("ERROR: " + err3);
                   // Something broke so tell the user
                   res.send(500);
                 }
