@@ -26,6 +26,18 @@ function cartOrder(req, res) {
   // This function would empty the cart and place an order
   // it is not complete, there should be a JSON body
   // with order info in it.
+  
+  /*
+   * @j0nnyD instructions
+   * Look for user cart
+   * copy that data to a new order
+   * save the order
+   * remove the cart
+   *
+   * There will be JSON in the req.body that will contain order info
+   * including the shipping and billing address which you will have to
+   * save in the order. Check the order schema, do what makes sense
+   */
   res.send(JSON.stringify(response));
 }
 
