@@ -23,11 +23,27 @@
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 
-var response = {};
-
-var menuId = 1;
-var menuItemId = 1;
-
+// j0nnyD:
+/*
+ * You need to: findOne() the user's cart
+ * Update the schema buy adding a cart item.
+ * The req.body will contain json with options.
+ *
+ * You need to CHECK FIRST if a similar item already exists
+ * This will be the case that you just add to the quantity in cart
+ *
+ * You need to DEEP CHECK the options to make sure that
+ * you really need to make a new item instance in the cart
+ *
+ * And then of course save the data
+ * This function is going to be very deep.
+ * If you feel the need, you can separate everything out into helper functions.
+ * If you do, and your function returns something, you MUST instead require a callback
+ * Functions that return data are blocking, and that is not allowed in this case.
+ * 
+ * For item information, it will be passed as req.params. things proceeded by a :
+ * if you run into trouble, message me
+ */
 // Route handling function
 function cart(req, res) {
   var quantity = parseInt(req.params.quantity);
@@ -45,5 +61,5 @@ function cart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/cart/:menuId/:itemId/:quantity', cart);
+  app.post('/cart/:restaraunt/:menu/:item/:quantity', cart);
 };
