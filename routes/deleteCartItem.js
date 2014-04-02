@@ -40,5 +40,5 @@ function cart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.delete('/cart/:menuId/:itemId/', cart);
+  app.delete('/cart/:restaurant/:menu/:item/', cart);
 };
