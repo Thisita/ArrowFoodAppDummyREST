@@ -23,19 +23,6 @@
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 
-var response = [
-  {
-    menuId: "1",
-    itemId: "1",
-    quantity: "1"
-  },
-  {
-    menuId: "1",
-    itemId: "2",
-    quantity: "2"
-  }
-];
-
 // Route handling function
 function cart(req, res) {
   if(req.session.authenticated) {
