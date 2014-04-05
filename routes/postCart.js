@@ -22,6 +22,7 @@
 // Mongoose imports
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
+var Menu = mongoose.model('Menu');
 
 // j0nnyD:
 /*
@@ -46,6 +47,68 @@ var Cart = mongoose.model('Cart');
  */
 // Route handling function
 function cart(req, res) {
+	// Boolean for 
+	var added = false;
+	// Check if the user is signed in
+	if(req.session.authenticated) {
+		Cart.findOne({'username' : req.session.username}, function(err, cart) {
+			if(cart) {
+				// Check that the menu exists
+				var json = JSON.parse(req.body);
+				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
+					if(menu) {
+						for (var i = 0; i < menu.items.length; ++i) {
+							// Check that the item actually exists in the menu
+							if(menu.items[i].name == req.params.item) {
+								for (var j = 0; j < cart.items.length; ++j) {
+									// Check if that item is already in the cart
+									if(cart.items[j] == req.params.item) {
+										// Increment the quantity
+										cart.items[i].quantity += req.params.quantity;
+										
+										// Set boolean to true to escape the other for loop
+										addded = true;
+										break;
+									}
+								}
+								// Break out if the item was incremented
+								if (added) {
+									break;
+								} else {
+									// If the item was not found in the cart add a new one
+									var json = JSON.parse(req.body);
+									cart.items.push({
+										restaurant: req.params.restaurant,
+										menu: req.params.menu,
+										options: req.params.options,
+										quantity: json});
+								}
+							}
+						}
+					} else {
+						// Item not found
+						res.send(404);
+					}
+				});
+				// Check if there is already an instance of the item in the cart
+				
+				// Add to the cart
+				
+				// Else increment the quantity of the item
+			} else {
+				// Could not find the cart
+				res.send(404);
+			}
+		});
+	// Else not signed in, use the cart in the request
+	} else {
+		if(req.session.cart){
+		
+		} else {
+			// Could not find the cart
+			res.send(404);
+		}
+	}
   var quantity = parseInt(req.params.quantity);
   if(!isNaN(quantity)) {
     if(req.params.menuId == menuId
