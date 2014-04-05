@@ -68,14 +68,16 @@ function cart(req, res) {
 										// Save the cart
 										cart.markModified('items');
 										cart.save(function(err) {
-											 if(err) { console.error('ERROR!'); }
+										 if(err) {
+											console.error('ERROR!');
+											} else {
+												// Send success
+												res.send('{"success":true}');
+											}
 										});
 										
 										// Set boolean to true to escape the other for loop
 										added = true;
-										
-										// Send success and break
-										res.send('{"success":true}');
 										break;
 									}
 								}
@@ -94,11 +96,13 @@ function cart(req, res) {
 									// Save the cart
 									cart.markModified('items');
 									cart.save(function(err) {
-										 if(err) { console.error('ERROR!'); }
+										 if(err) {
+											console.error('ERROR!');
+											} else {
+												// Send success
+												res.send('{"success":true}');
+											}
 									});
-									
-									// Send success and break
-									res.send('{"success":true}');
 									break;
 								}
 							}
@@ -124,11 +128,13 @@ function cart(req, res) {
 				// Save the cart
 				newCart.markModified('items');
 				newCart.save(function(err) {
-					 if(err) { console.error('ERROR!'); }
+					if(err) {
+						console.error('ERROR!');
+						} else {
+							// Send success
+							res.send('{"success":true}');
+						}
 				});
-				
-				// Send success
-				res.send('{"success":true}');
 			}
 		});
 	// Else not signed in, use the cart in the request
