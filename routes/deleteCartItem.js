@@ -22,20 +22,119 @@
 // Mongoose imports
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
-
-var response = {};
-
-var menuId = 1;
-var menuItemId = 1;
+var Menu = mongoose.model('Menu');
 
 // Route handling function
 function cart(req, res) {
-  if(req.params.menuId == menuId
-    && req.params.itemId == itemId) {
-    res.send(JSON.stringify(response));
-  } else {
-    res.send(404);
-  }
+	// Boolean for knowing if the item has been deleted
+	var deleted = false;
+	// Check if the user is signed in
+	if(req.session.authenticated) {
+		Cart.findOne({'username' : req.session.username}, function(err, cart) {
+			if(cart) {
+				// Check that the menu exists
+				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
+					if(menu) {
+						for (var i = 0; i < menu.items.length; ++i) {
+							// Check that the item actually exists in the menu
+							if(menu.items[i].name == req.params.item) {
+								for (var j = 0; j < cart.items.length; ++j) {
+									// Check the quantity
+									if(req.session.cart.items[i].quantity > 1) {
+										// Decrement quantity of there is more than one
+										--cart.items[i].quantity;
+										
+										// Save the cart
+										cart.markModified('items');
+										cart.save(function(err) {
+											 if(err) { console.error('ERROR!'); }
+										});
+										
+										// Set boolean to true to escape the other for loop
+										deleted = true;
+										break;
+									} else {
+										// Remove the item completely from the cart
+										cart.items.splice(i, 1);
+										
+										// Save the cart
+										cart.markModified('items');
+										cart.save(function(err) {
+											 if(err) { console.error('ERROR!'); }
+										});
+										
+										// Set boolean to true to escape the other for loop
+										deleted = true;
+										break;
+									}
+								}
+								// Break out if the item was decremented
+								if (deleted) {
+									break;
+								} else {
+									// If the item was not found in the cart
+									res.send(404);
+								}
+							}
+						}
+					} else {
+						// Item not found
+						res.send(404);
+					}
+				});
+			} else {
+				// Could not find the cart
+				res.send(404);
+			}
+		});
+	// Else not signed in, use the cart in the request
+	} else {
+		if(req.session.cart){
+			Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
+				if(menu) {
+					for (var i = 0; i < menu.items.length; ++i) {
+						// Check that the item actually exists in the menu
+						if(menu.items[i].name == req.params.item) {
+							for (var j = 0; j < req.session.cart.items.length ; ++j) {
+								// Check that item is actually in the cart
+								if(req.session.cart.items[j] == req.params.item) {
+									// Check the quantity
+									if(req.session.cart.items[i].quantity > 1) {
+										// Decrement quantity of there is more than one
+										--req.session.cart.items[i].quantity;
+										
+										// Set boolean to true to escape the other for loop
+										deleted = true;
+										break;
+									} else {
+										// Remove the item completely from the cart
+										req.session.cart.items.splice(i, 1);
+										
+										// Set boolean to true to escape the other for loop
+										deleted = true;
+										break;
+									}
+								}
+							}
+							// Break out if the item was decremented
+							if (deleted) {
+								break;
+							} else {
+								// If the item was not found in the cart
+								res.send(404);
+							}
+						}
+					}
+				} else {
+					// Item not found
+					res.send(404);
+				}
+			});
+		} else {
+			// Could not find the cart
+			res.send(404);
+		}
+	}
 }
 
 // Export the route association function
