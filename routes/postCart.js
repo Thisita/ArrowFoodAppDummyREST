@@ -47,7 +47,7 @@ var Menu = mongoose.model('Menu');
  */
 // Route handling function
 function cart(req, res) {
-	// Boolean for 
+	// Boolean for knowing if the item has been added
 	var added = false;
 	// Check if the user is signed in
 	if(req.session.authenticated) {
@@ -66,7 +66,7 @@ function cart(req, res) {
 										cart.items[i].quantity += req.params.quantity;
 										
 										// Set boolean to true to escape the other for loop
-										addded = true;
+										added = true;
 										break;
 									}
 								}
