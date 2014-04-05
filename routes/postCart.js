@@ -80,8 +80,8 @@ function cart(req, res) {
 									cart.items.push({
 										restaurant: req.params.restaurant,
 										menu: req.params.menu,
-										options: req.params.options,
-										quantity: json});
+										options: json,
+										quantity: req.params.quantity});
 								}
 							}
 						}
