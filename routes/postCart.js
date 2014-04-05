@@ -96,7 +96,6 @@ function cart(req, res) {
 		});
 	// Else not signed in, use the cart in the request
 	} else {
-	//req.session.cart 
 		if(req.session.cart){
 			Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
 				if(menu) {
@@ -138,17 +137,6 @@ function cart(req, res) {
 			res.send(404);
 		}
 	}
-  var quantity = parseInt(req.params.quantity);
-  if(!isNaN(quantity)) {
-    if(req.params.menuId == menuId
-      && req.params.itemId == itemId) {
-      res.send(JSON.stringify(response));
-    } else {
-      res.send(404);
-    }
-  } else {
-    res.send(400);
-  }
 }
 
 // Export the route association function
