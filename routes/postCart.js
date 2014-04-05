@@ -54,7 +54,6 @@ function cart(req, res) {
 		Cart.findOne({'username' : req.session.username}, function(err, cart) {
 			if(cart) {
 				// Check that the menu exists
-				var json = JSON.parse(req.body);
 				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
 					if(menu) {
 						for (var i = 0; i < menu.items.length; ++i) {
@@ -90,11 +89,6 @@ function cart(req, res) {
 						res.send(404);
 					}
 				});
-				// Check if there is already an instance of the item in the cart
-				
-				// Add to the cart
-				
-				// Else increment the quantity of the item
 			} else {
 				// Could not find the cart
 				res.send(404);
@@ -102,8 +96,43 @@ function cart(req, res) {
 		});
 	// Else not signed in, use the cart in the request
 	} else {
+	//req.session.cart 
 		if(req.session.cart){
-		
+			Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
+				if(menu) {
+					for (var i = 0; i < menu.items.length; ++i) {
+						// Check that the item actually exists in the menu
+						if(menu.items[i].name == req.params.item) {
+							for (var j = 0; j < req.session.cart.items.length ; ++j) {
+								// Check if that item is already in the cart
+								if(req.session.cart.items[j] == req.params.item) {
+									// Increment the quantity
+									req.session.cart.items[i].quantity += req.params.quantity;
+									
+									// Set boolean to true to escape the other for loop
+									addded = true;
+									break;
+								}
+							}
+							// Break out if the item was incremented
+							if (added) {
+								break;
+							} else {
+								// If the item was not found in the cart add a new one
+								var json = JSON.parse(req.body);
+								req.session.cart.items.push({
+									restaurant: req.params.restaurant,
+									menu: req.params.menu,
+									options: json,
+									quantity: req.params.quantity});
+							}
+						}
+					}
+				} else {
+					// Item not found
+					res.send(404);
+				}
+			});
 		} else {
 			// Could not find the cart
 			res.send(404);
