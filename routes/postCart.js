@@ -65,8 +65,17 @@ function cart(req, res) {
 										// Increment the quantity
 										cart.items[i].quantity += req.params.quantity;
 										
+										// Save the cart
+										cart.markModified('items');
+										cart.save(function(err) {
+											 if(err) { console.error('ERROR!'); }
+										});
+										
 										// Set boolean to true to escape the other for loop
 										added = true;
+										
+										// Send success and break
+										res.send('{"success":true}');
 										break;
 									}
 								}
@@ -81,6 +90,16 @@ function cart(req, res) {
 										menu: req.params.menu,
 										options: json,
 										quantity: req.params.quantity});
+										
+									// Save the cart
+									cart.markModified('items');
+									cart.save(function(err) {
+										 if(err) { console.error('ERROR!'); }
+									});
+									
+									// Send success and break
+									res.send('{"success":true}');
+									break;
 								}
 							}
 						}
@@ -90,8 +109,26 @@ function cart(req, res) {
 					}
 				});
 			} else {
-				// Could not find the cart
-				res.send(404);
+				// Create the cart
+				var newCart = new Cart();
+				newCart.username = req.session.username;
+				
+				// Add the item
+				var json = JSON.parse(req.body);
+				newCart.items.push({
+					restaurant: req.params.restaurant,
+					menu: req.params.menu,
+					options: json,
+					quantity: req.params.quantity});
+				
+				// Save the cart
+				newCart.markModified('items');
+				newCart.save(function(err) {
+					 if(err) { console.error('ERROR!'); }
+				});
+				
+				// Send success
+				res.send('{"success":true}');
 			}
 		});
 	// Else not signed in, use the cart in the request
@@ -109,7 +146,10 @@ function cart(req, res) {
 									req.session.cart.items[i].quantity += req.params.quantity;
 									
 									// Set boolean to true to escape the other for loop
-									addded = true;
+									added = true;
+									
+									// Send success and break
+									res.send('{"success":true}');
 									break;
 								}
 							}
@@ -124,12 +164,28 @@ function cart(req, res) {
 									menu: req.params.menu,
 									options: json,
 									quantity: req.params.quantity});
+									
+								// Send success and break
+								res.send('{"success":true}');
+								break;
 							}
 						}
 					}
 				} else {
-					// Item not found
-					res.send(404);
+					// Create the cart
+					req.session.cart = {};
+					req.session.cart.items = [];
+					
+					// Add the item
+					var json = JSON.parse(req.body);
+					req.session.cart.items.push({
+						restaurant: req.params.restaurant,
+						menu: req.params.menu,
+						options: json,
+						quantity: req.params.quantity});
+						
+					// Send success
+					res.send('{"success":true}');
 				}
 			});
 		} else {
