@@ -47,7 +47,12 @@ function cart(req, res) {
 										// Save the cart
 										cart.markModified('items');
 										cart.save(function(err) {
-											 if(err) { console.error('ERROR!'); }
+										 if(err) {
+											console.error('ERROR!');
+											} else {
+												// Send success
+												res.send('{"success":true}');
+											}
 										});
 										
 										// Set boolean to true to escape the other for loop
@@ -60,7 +65,12 @@ function cart(req, res) {
 										// Save the cart
 										cart.markModified('items');
 										cart.save(function(err) {
-											 if(err) { console.error('ERROR!'); }
+										 if(err) {
+											console.error('ERROR!');
+											} else {
+												// Send success
+												res.send('{"success":true}');
+											}
 										});
 										
 										// Set boolean to true to escape the other for loop
@@ -105,6 +115,9 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
+										
+										// Send success
+										res.send('{"success":true}');
 										break;
 									} else {
 										// Remove the item completely from the cart
@@ -112,6 +125,9 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
+										
+										// Send success
+										res.send('{"success":true}');
 										break;
 									}
 								}
