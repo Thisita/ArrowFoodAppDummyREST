@@ -48,7 +48,8 @@ function cart(req, res) {
 										cart.markModified('items');
 										cart.save(function(err) {
 										 if(err) {
-											console.error('ERROR!');
+											console.error("Error: Failed to delete cart item [" + err + "]");
+											res.send(500);
 											} else {
 												// Send success
 												res.send('{"success":true}');
@@ -66,7 +67,8 @@ function cart(req, res) {
 										cart.markModified('items');
 										cart.save(function(err) {
 										 if(err) {
-											console.error('ERROR!');
+											console.error("Error: Failed to delete cart item [" + err + "]");
+											res.send(500);
 											} else {
 												// Send success
 												res.send('{"success":true}');
