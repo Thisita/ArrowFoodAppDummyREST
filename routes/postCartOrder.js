@@ -19,7 +19,9 @@
 */
 'use strict';
 
-var response = {};
+var mongoose = require('mongoose');
+var Cart = mongoose.model('Cart');
+var Order = mongoose.model('Order');
 
 // Route handling function
 function cartOrder(req, res) {
@@ -38,7 +40,39 @@ function cartOrder(req, res) {
    * including the shipping and billing address which you will have to
    * save in the order. Check the order schema, do what makes sense
    */
-  res.send(JSON.stringify(response));
+	 
+	 if(req.session.authenticated) {
+    // Find the user's cart
+    Cart.findOne({'username' : req.session.username}, function(err, cart) {
+      if(cart) {
+        // Copy the cart to the order
+				var json = JSON.parse(req.body);
+				var newOrder = new Order();
+				newOrder.username = req.session.username;
+				newOrder.cart = req.session.cart;
+				newOrder.shipping = json.shipping;
+				newOrder.billing = json.billing;
+				
+				// Save the order
+				newOrder.save(function(err) {
+					 if(err) {
+						console.error("Error: Failed to save the order [" + err + "]");
+						res.send(500);
+						} else {
+							// Send success
+							res.send('{"success":true}');
+						}
+				});
+				
+      } else {
+        // Could not find the cart
+        res.send(404);
+      }
+    });
+  } else {
+    // Unauthenticated
+		res.send(403);
+  }
 }
 
 // Export the route association function
