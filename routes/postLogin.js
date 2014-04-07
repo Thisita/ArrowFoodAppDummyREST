@@ -72,6 +72,8 @@ function login(req, res) {
           if(match) {
             // log
             console.log(user.username + ' logged in');
+            // mark the session
+            req.session.authenticated = true;
             // tell the user it was successful
             res.send(JSON.stringify(response));
           } else {
