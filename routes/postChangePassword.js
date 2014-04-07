@@ -28,6 +28,7 @@ var User = mongoose.model('User');
 var response = {};
 
 // Some parameters for the pbkdf2
+var saltSize = 128;
 var rounds = 10000;
 var keylen = 2048;
 
@@ -72,8 +73,34 @@ function changePassword(req, res) {
         if(user) {
           checkPassword(json.oldPassword, user.password, user.salt, function(match) {
             if(match) {
-              // log
-              console.log(user.username + ' logged in');
+              // Generate the salt
+              a.salt = crypto.randomBytes(saltSize).toString('base64');
+              // PBKDF2 hash the password
+              crypto.pbkdf2(json.password, decode(a.salt), iterations, keylen, function(err3, derivedKey) {
+                // Make sure the crypto didn't die
+                if(derivedKey) {
+                  // Store the hashed password
+                  a.password = encode(derivedKey);
+                  a.save(function(err4, a, count) {
+                    if(err4 || count !== 1) {
+                      // log error
+                      console.log("ERROR: " + err4);
+                      // Something broke so tell the user
+                      res.send(500);
+                    } else {
+                      // log info
+                      console.log("INFO: User " + a.username + " created");
+                      // Send a success response
+                      res.send('{"error":false}');
+                    }
+                  });
+                } else {
+                  // log error
+                  console.log("ERROR: " + err3);
+                  // Something broke so tell the user
+                  res.send(500);
+                }
+              });
               // tell the user it was successful
               res.send(JSON.stringify(response));
             } else {
