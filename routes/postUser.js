@@ -43,6 +43,7 @@ var response = {};
 
 // Route handling function
 function user(req, res) {
+  console.log(req.body);
   var json = JSON.parse(req.body);
   
   // Check session authentication
