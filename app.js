@@ -33,7 +33,10 @@ require('./configuration')(app, express);
 require('./routes')(app, db);
 
 // Listen
-app.listen(process.env.PORT || 8080);
+var port = Number(process.env.PORT || 8080);
+app.listen(port, function(){
+	console.log("Listening on " + port);
+});
 
 // Report to log
 console.log("ArrowFoodAppDummyREST server started on port " + (process.env.PORT || 8080));
