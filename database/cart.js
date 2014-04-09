@@ -19,29 +19,28 @@
 */
 'use strict';
 
-// Mongoose imports
+// Import mongoose
 var mongoose = require('mongoose');
-var Order = mongoose.model('Order');
 
-// Route handling function
-function orders(req, res) {
-  if(req.session.authenticated) {
-    Order.find({'username' : req.session.username}, function(err, orders) {
-      if (orders) {
-        // Send the orders
-        res.send(JSON.stringify(orders));
-      } else {
-        // Could not find the orders
-        res.send(404);
-      }
-    });
-  } else {
-    // Unauthorized
-    res.send(401);
-  }
-}
+// Schema for the items in the cart
+var cartItemSchema = new mongoose.Schema({
+  menuId: String,
+  itemId: String,
+  quantity: Number,
+  total: Number,
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now }
+});
 
-// Export the route association function
-module.exports = function(app) {
-  app.get('/orders', orders);
-};
+// Schema for the cart itself
+var cartSchema = new mongoose.Schema({
+  username: String,
+  created: { type: Date, default: Date.now },
+  updated: { type: Date, default: Date.now },
+  items: [cartItemSchema],
+  coupons: [String],
+  total: Number
+});
+
+// Export the schema
+var Cart = module.exports = mongoose.model('Cart', cartSchema);

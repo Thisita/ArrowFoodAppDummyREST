@@ -19,29 +19,16 @@
 */
 'use strict';
 
-// Mongoose imports
 var mongoose = require('mongoose');
-var Order = mongoose.model('Order');
 
-// Route handling function
-function orders(req, res) {
-  if(req.session.authenticated) {
-    Order.find({'username' : req.session.username}, function(err, orders) {
-      if (orders) {
-        // Send the orders
-        res.send(JSON.stringify(orders));
-      } else {
-        // Could not find the orders
-        res.send(404);
-      }
-    });
-  } else {
-    // Unauthorized
-    res.send(401);
-  }
-}
+// This is a schema for reseting passwords in the usual way
+// Nothing fancy, just a short time token
+var passwordResetSchema = new mongoose.Schema({
+  username: String,
+  token: String,
+  expiration: { type: Date, default: Date.now },
+  created: { type: Date, default: Date.now }
+});
 
-// Export the route association function
-module.exports = function(app) {
-  app.get('/orders', orders);
-};
+// Export the schema
+var PasswordReset = module.exports = mongoose.model('PasswordReset', passwordResetSchema);

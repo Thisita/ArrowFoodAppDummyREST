@@ -1,21 +1,21 @@
 /*
-    ArrowFoodAppDummyREST
+    ArrowFoodAppREST
     Copyright © 2014 Ian Zachary Ledrick, also known as Thisita.
     
-    This file is part of ArrowFoodAppDummyREST.
+    This file is part of ArrowFoodAppREST.
 
-    ArrowFoodAppDummyREST is free software: you can redistribute it and/or modify
+    ArrowFoodAppREST is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    ArrowFoodAppDummyREST is distributed in the hope that it will be useful,
+    ArrowFoodAppREST is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with ArrowFoodAppDummyREST.  If not, see <http://www.gnu.org/licenses/>.
+    along with ArrowFoodAppREST.  If not, see <http://www.gnu.org/licenses/>.
 */
 'use strict';
 
@@ -25,15 +25,17 @@ var express = require('express');
 // Create the app
 var app = module.exports = express();
 
+// Get db instance
+var db = require('./database');
+
 // Delegate work
 require('./configuration')(app, express);
-require('./routes')(app);
+require('./routes')(app, db);
 
-// Listen
+// Get the port
 var port = Number(process.env.PORT || 8080);
-app.listen(port, function() { 
-	console.log("Listening on " + port);
+// Start listening on the port
+app.listen(port, function(){
+  // report to log
+	console.log("ArrowFoodAppDummyREST server listening on port  " + port);
 });
-
-// Report to log
-console.log("ArrowFoodAppDummyREST server started on port " + (process.env.PORT || 8080));

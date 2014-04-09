@@ -19,29 +19,39 @@
 */
 'use strict';
 
-// Mongoose imports
 var mongoose = require('mongoose');
-var Order = mongoose.model('Order');
+var CartSchema = mongoose.model('Cart').schema;
 
-// Route handling function
-function orders(req, res) {
-  if(req.session.authenticated) {
-    Order.find({'username' : req.session.username}, function(err, orders) {
-      if (orders) {
-        // Send the orders
-        res.send(JSON.stringify(orders));
-      } else {
-        // Could not find the orders
-        res.send(404);
-      }
-    });
-  } else {
-    // Unauthorized
-    res.send(401);
-  }
-}
+// Schema for status items
+var orderStatusSchema = new mongoose.Schema({
+  authority: String,
+  state: String,
+  created: { type: Date, default: Date.now }
+});
 
-// Export the route association function
-module.exports = function(app) {
-  app.get('/orders', orders);
-};
+// Schema for the order
+var orderSchema = new mongoose.Schema({
+  username: String,
+  created: { type: Date, default: Date.now },
+  billing: {
+    line1: String,
+    line2: String,
+    city: String,
+    state: String,
+    zip: String
+  },
+  shipping: {
+    line1: String,
+    line2: String,
+    city: String,
+    state: String,
+    zip: String
+  },
+  updates: [orderStatusSchema],
+  cart: [CartSchema], // this is a dirty, dirty DIRTY hack
+  rating: Number,
+  comment: String
+});
+
+// Export the schema
+var Order = module.exports = mongoose.model('Order', orderSchema);

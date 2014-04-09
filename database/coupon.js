@@ -19,29 +19,21 @@
 */
 'use strict';
 
-// Mongoose imports
+// Import mongoose
 var mongoose = require('mongoose');
-var Order = mongoose.model('Order');
 
-// Route handling function
-function orders(req, res) {
-  if(req.session.authenticated) {
-    Order.find({'username' : req.session.username}, function(err, orders) {
-      if (orders) {
-        // Send the orders
-        res.send(JSON.stringify(orders));
-      } else {
-        // Could not find the orders
-        res.send(404);
-      }
-    });
-  } else {
-    // Unauthorized
-    res.send(401);
-  }
-}
+// Schema for coupons/promotions
+// images are PNGs
+var couponSchema = new mongoose.Schema({
+  token: String,
+  image: Buffer,
+  icon: Buffer,
+  type: String,
+  param: String,
+  updated: { type: Date, default: Date.now },
+  created: { type: Date, default: Date.now },
+  claims: { type: Number, default: 0 }
+});
 
-// Export the route association function
-module.exports = function(app) {
-  app.get('/orders', orders);
-};
+// Export the schema
+var Coupon = module.exports = mongoose.model('Coupon', couponSchema);

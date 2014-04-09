@@ -19,9 +19,14 @@
 */
 'use strict';
 
-// Mongoose imports
+// Some includes
+var crypto = require('crypto');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var PasswordReset = mongoose.model('PasswordReset');
+
+// The response for a 200 will always be the same.
+var response = {};
 
 // Some parameters for the pbkdf2
 var saltSize = 128;
@@ -39,61 +44,20 @@ function decode(text) {
   return new Buffer(text, 'base64').toString('utf8');
 }
 
-var response = {};
-
 // Route handling function
-function user(req, res) {
-  console.log(JSON.stringify(req.body));
+function resetPassword(req, res) {
+  // Parse the body
   var json = JSON.parse(req.body);
-  
-  // Check session authentication
-  if(req.session.authenticated) {
-    if(json.id && json.email && json.name
-      && json.address && json.phone) {
-      
-      // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, userData){
-        if(userData) {
-          // Send profile
-          res.send(JSON.stringify(userData));
-        } else {
-          // Could not find the profile
-          res.send(404);
-        }
-      });
-    } else {
-      // Bad request
-      res.send(400);
-    }
-  } else {
-    // Check to see if enough data is provided to register a user
-    if(json.username && json.email && json.name && json.password) {
-      // Check and see if the username exists
-      User.find({ 'username' : json.username }, function(err, userData) {
-        if(userData) {
-          // log info
-          console.log("INFO: Username already taken " + json.username);
-          // The username exists, error out
-          res.send(JSON.stringify('{"error":"Username already in use"}'));
-        } else {
-          // Check and see if email exists
-          User.find({ 'email' : json.email }, function(err2, userData2) {
-            if(userData2) {
-              // log info
-              console.log("INFO: Email already taken " + json.email);
-              // The email exists, error out
-              res.send(JSON.stringify('{"error":"Email already in use"}'));
-            } else {
-              // log info
-              console.log("INFO: Creating user " + json.username);
-              // Create a new user
-              var a = new User();
-              a.username = json.username;
-              a.email = json.email;
-              a.name = json.name;
-              a.role = 'customer';
-              a.phones = json.phones; // Might have to deep copy
-              a.addresss = json.addresss; // Might have to deep copy
+  // check the syntax
+  if(json.password) {
+    // look for the token
+    PasswordReset.findOne({'token': req.params.token}, function(err, passwordReset) {
+      // make sure it exists
+      if(passwordReset) {
+        if(Date.now < passwordReset.expiration) {
+        // find the user attached to the token
+          User.findOne({'username': passwordReset.username}, function(err, user) {
+            if(user) {
               // Generate the salt
               a.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
@@ -122,15 +86,48 @@ function user(req, res) {
                   res.send(500);
                 }
               });
+              // tell the user it was successful
+              res.send(JSON.stringify(response));
+            } else {
+              // Could not find user doc
+              // log
+              console.log('ERROR: Could not find user attached to PasswordReset [' + passwordReset.username + ']');
+              // send not found error
+              res.send(404);
             }
           });
+        } else {
+          // The token is expired
+          // remove the doc
+          passwordReset.remove(function(err) {
+            // check error
+            if(err) {
+              // log it
+              console.log('ERROR: Could not remove old passwordReset doc [' + err + ']');
+            } else {
+              // log it
+              console.log('INFO: Removed old passwordReset');
+            }
+            // Send not found error to the user
+            res.send(404);
+          });
         }
-      });
-    }
+      } else {
+        // could not find password reset doc
+        // log
+        console.log('ERROR: Could not find password reset doc');
+        // send not found error
+        res.send(404);
+      }
+    });
+  } else {
+    // req body not formatted correctly
+    // send bad request error
+    res.send(400);
   }
 }
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/user', user);
+  app.post('/user/password/reset/:token', resetPassword);
 };

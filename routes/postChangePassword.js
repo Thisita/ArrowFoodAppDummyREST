@@ -19,9 +19,13 @@
 */
 'use strict';
 
-// Mongoose imports
+// Some includes
+var crypto = require('crypto');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+
+// The response for a 200 will always be the same.
+var response = {};
 
 // Some parameters for the pbkdf2
 var saltSize = 128;
@@ -39,61 +43,36 @@ function decode(text) {
   return new Buffer(text, 'base64').toString('utf8');
 }
 
-var response = {};
+// Helper function for testing passwords
+function checkPassword(attempt, password, salt, cb) {
+  // we use pbkdf2 because thisita <3 it
+  pbkdf2(attempt, decode(salt), iterations, keylen, function(err, derivedKey) {
+    if(derivedKey) {
+      // encode the key
+      var encodedAttempt = encode(derivedKey);
+      // return the result of a check 
+      cb(encodedAttempt == password);
+    } else {
+      // log that there was some weird error
+      console.log('pbkdf2() error: ' + err.toString());
+      // something broke so check is false
+      cb(false);
+    }
+  });
+}
 
 // Route handling function
-function user(req, res) {
-  console.log(JSON.stringify(req.body));
-  var json = JSON.parse(req.body);
-  
-  // Check session authentication
+function changePassword(req, res) {
+  // check authenticated
   if(req.session.authenticated) {
-    if(json.id && json.email && json.name
-      && json.address && json.phone) {
-      
-      // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, userData){
-        if(userData) {
-          // Send profile
-          res.send(JSON.stringify(userData));
-        } else {
-          // Could not find the profile
-          res.send(404);
-        }
-      });
-    } else {
-      // Bad request
-      res.send(400);
-    }
-  } else {
-    // Check to see if enough data is provided to register a user
-    if(json.username && json.email && json.name && json.password) {
-      // Check and see if the username exists
-      User.find({ 'username' : json.username }, function(err, userData) {
-        if(userData) {
-          // log info
-          console.log("INFO: Username already taken " + json.username);
-          // The username exists, error out
-          res.send(JSON.stringify('{"error":"Username already in use"}'));
-        } else {
-          // Check and see if email exists
-          User.find({ 'email' : json.email }, function(err2, userData2) {
-            if(userData2) {
-              // log info
-              console.log("INFO: Email already taken " + json.email);
-              // The email exists, error out
-              res.send(JSON.stringify('{"error":"Email already in use"}'));
-            } else {
-              // log info
-              console.log("INFO: Creating user " + json.username);
-              // Create a new user
-              var a = new User();
-              a.username = json.username;
-              a.email = json.email;
-              a.name = json.name;
-              a.role = 'customer';
-              a.phones = json.phones; // Might have to deep copy
-              a.addresss = json.addresss; // Might have to deep copy
+    // Parse the body
+    var json = JSON.parse(req.body);
+    // check the syntax
+    if(json.password && json.oldPassword) {
+      User.findOne({'username': req.session.username}, function(err, user) {
+        if(user) {
+          checkPassword(json.oldPassword, user.password, user.salt, function(match) {
+            if(match) {
               // Generate the salt
               a.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
@@ -122,15 +101,36 @@ function user(req, res) {
                   res.send(500);
                 }
               });
+              // tell the user it was successful
+              res.send(JSON.stringify(response));
+            } else {
+              // log the failure
+              console.log('Failed change password attempt for ' + user.username + ' (invalid password)');
+              // tell the user we could not find
+              // why no access denied? because we don't want
+              // attackers to tell the difference from
+              // no account
+              res.send(404);
             }
           });
+        } else {
+          // log failure
+          console.log('Failed login attempt for ' + json.username + ' (invalid username)');
+          // if we get nothing tell the user
+          // we couldn't find it
+          res.send(404);
         }
       });
+    } else {
+      // if the syntax is bad let the user know
+      res.send(400);
     }
+  } else {
+    res.send(403);
   }
 }
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/user', user);
+  app.post('/user/password', changePassword);
 };
