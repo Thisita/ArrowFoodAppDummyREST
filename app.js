@@ -36,4 +36,4 @@ app.listen(port, function() {
 });
 
 // Report to log
-console.log("ArrowFoodAppDummyREST server started on port " + (process.env.PORT || 8080));
+print("ArrowFoodAppDummyREST server started on port " + (process.env.PORT || 8080));
