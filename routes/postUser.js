@@ -22,7 +22,6 @@
 // Mongoose imports
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-
 // Some parameters for the pbkdf2
 var saltSize = 128;
 var rounds = 10000;
