@@ -19,7 +19,7 @@
 */
 'use strict';
 
-var url = 'mongodb://localhost/afdb';
+var url = process.env.MONGOHQ_URL || 'mongodb://localhost/afdb';
 var mongoose = require('mongoose');
 mongoose.connect(url);
 
