@@ -30,7 +30,7 @@ module.exports = function(app, express) {
       secret: 'random_data',
       maxAge: new Date(Date.now() + 3600000),
       store: new MongoStore({
-        db: 'afdb',
+        db: 'app23900962',
         host: 'localhost'
       })
     }));
