@@ -30,8 +30,7 @@ module.exports = function(app, express) {
       secret: 'random_data',
       maxAge: new Date(Date.now() + 3600000),
       store: new MongoStore({
-        db: 'afdb',
-        host: 'localhost'
+        url: process.env.MONGOHQ_URL
       })
     }));
     // routing
