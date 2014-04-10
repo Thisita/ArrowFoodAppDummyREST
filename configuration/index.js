@@ -35,6 +35,8 @@ module.exports = function(app, express) {
         url: url
       })
     }));
+    // parse the body
+    app.use(express.bodyParser());
     // routing
     app.use(app.router);
   });
