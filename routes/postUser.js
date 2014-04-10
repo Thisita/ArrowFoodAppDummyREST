@@ -1,4 +1,4 @@
-/*
+﻿/*
     ArrowFoodAppREST
     Copyright © 2014 Ian Zachary Ledrick, also known as Thisita.
     
@@ -44,7 +44,7 @@ var response = {};
 // Route handling function
 function user(req, res) {
   console.log(JSON.stringify(req.body));
-  var json = JSON.parse(req.body);
+  var json = req.body;
   
   // Check session authentication
   if(req.session.authenticated) {
