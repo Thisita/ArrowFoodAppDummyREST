@@ -9,11 +9,8 @@
     "express": "*",
     "mongoose": "*",
     "connect-mongo": "*"
-<<<<<<< HEAD
-=======
   },
   "scripts": {
-	"start": "node app.js"
->>>>>>> 13e2050c0b79d1085b4841b1bef1c432168d1713
+	  "start": "node app.js"
   }
 }
