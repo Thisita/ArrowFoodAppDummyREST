@@ -47,7 +47,7 @@ function decode(text) {
 // Route handling function
 function resetPassword(req, res) {
   // Parse the body
-  var json = JSON.parse(req.body);
+  var json = req.body;
   // check the syntax
   if(json.password) {
     // look for the token

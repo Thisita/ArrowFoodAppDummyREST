@@ -87,7 +87,7 @@ function cart(req, res) {
 									break;
 								} else {
 									// If the item was not found in the cart add a new one
-									var json = JSON.parse(req.body);
+									var json = req.body;
 									cart.items.push({
 										restaurant: req.params.restaurant,
 										menu: req.params.menu,
@@ -120,7 +120,7 @@ function cart(req, res) {
 				newCart.username = req.session.username;
 				
 				// Add the item
-				var json = JSON.parse(req.body);
+				var json = req.body;
 				newCart.items.push({
 					restaurant: req.params.restaurant,
 					menu: req.params.menu,
@@ -167,7 +167,7 @@ function cart(req, res) {
 								break;
 							} else {
 								// If the item was not found in the cart add a new one
-								var json = JSON.parse(req.body);
+								var json = req.body;
 								req.session.cart.items.push({
 									restaurant: req.params.restaurant,
 									menu: req.params.menu,
@@ -186,7 +186,7 @@ function cart(req, res) {
 					req.session.cart.items = [];
 					
 					// Add the item
-					var json = JSON.parse(req.body);
+					var json = req.body;
 					req.session.cart.items.push({
 						restaurant: req.params.restaurant,
 						menu: req.params.menu,

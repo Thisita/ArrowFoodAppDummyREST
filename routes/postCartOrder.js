@@ -46,7 +46,7 @@ function cartOrder(req, res) {
     Cart.findOne({'username' : req.session.username}, function(err, cart) {
       if(cart) {
         // Copy the cart to the order
-				var json = JSON.parse(req.body);
+				var json = req.body;
 				var newOrder = new Order();
 				newOrder.username = req.session.username;
 				newOrder.cart = req.session.cart;

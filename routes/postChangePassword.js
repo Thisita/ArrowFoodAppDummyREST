@@ -66,7 +66,7 @@ function changePassword(req, res) {
   // check authenticated
   if(req.session.authenticated) {
     // Parse the body
-    var json = JSON.parse(req.body);
+    var json = req.body;
     // check the syntax
     if(json.password && json.oldPassword) {
       User.findOne({'username': req.session.username}, function(err, user) {

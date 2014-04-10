@@ -63,7 +63,7 @@ function checkPassword(attempt, password, salt, cb) {
 // Route handling function
 function login(req, res) {
   // Parse the body
-  var json = JSON.parse(req.body);
+  var json = req.body;
   // check the syntax
   if(json.username && json.password) {
     User.findOne({'username': json.username}, function(err, user) {
