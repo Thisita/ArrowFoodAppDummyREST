@@ -74,7 +74,7 @@ function user(req, res) {
           // log info
           console.log("INFO: Username already taken " + json.username);
           // The username exists, error out
-          res.send(JSON.stringify('{"error":"Username already in use"}'));
+          res.send('{"error":"Username already in use"}');
         } else {
           // Check and see if email exists
           User.find({ 'email' : json.email }, function(err2, userData2) {
@@ -82,7 +82,7 @@ function user(req, res) {
               // log info
               console.log("INFO: Email already taken " + json.email);
               // The email exists, error out
-              res.send(JSON.stringify('{"error":"Email already in use"}'));
+              res.send('{"error":"Email already in use"}');
             } else {
               // log info
               console.log("INFO: Creating user " + json.username);
