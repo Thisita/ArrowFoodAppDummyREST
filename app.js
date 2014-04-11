@@ -20,6 +20,11 @@
 'use strict';
 
 // Imports
+if(process.env.NODETIME_ACCOUNT_KEY) {
+  require('nodetime').profile({
+    accountKey: process.env.NODETIME_ACCOUNT_KEY
+  });
+}
 var express = require('express');
 
 // Create the app

@@ -8,6 +8,7 @@
   "dependencies": {
     "express": "*",
     "mongoose": "*",
-    "connect-mongo": "*"
+    "connect-mongo": "*",
+	"nodetime":"*"
   }
 }
