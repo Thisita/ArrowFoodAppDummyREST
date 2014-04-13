@@ -19,6 +19,8 @@
 */
 'use strict';
 
+// Crypto import
+var crypto = require('crypto');
 // Mongoose imports
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
