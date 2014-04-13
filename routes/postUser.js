@@ -27,7 +27,7 @@ var User = mongoose.model('User');
 
 // Some parameters for the pbkdf2
 var saltSize = 128;
-var rounds = 10000;
+var iterations = 10000;
 var keylen = 2048;
 
 // Helper to encode base64
