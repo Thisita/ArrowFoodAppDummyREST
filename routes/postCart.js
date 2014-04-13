@@ -181,25 +181,28 @@ function cart(req, res) {
 						}
 					}
 				} else {
-					// Create the cart
-					req.session.cart = {};
-					req.session.cart.items = [];
-					
-					// Add the item
-					var json = req.body;
-					req.session.cart.items.push({
-						restaurant: req.params.restaurant,
-						menu: req.params.menu,
-						options: json,
-						quantity: req.params.quantity});
+					// Error, the menu does not exists
 						
-					// Send success
-					res.send('{"success":true}');
+					// Send not found because the menu was not found
+					res.send(404);
 				}
 			});
 		} else {
-			// Could not find the cart
-			res.send(404);
+			// Create the cart
+      req.session.cart = {};
+      req.session.cart.items = [];
+      
+      // Add the item
+      var json = req.body;
+      req.session.cart.items.push({
+        restaurant: req.params.restaurant,
+        menu: req.params.menu,
+        options: json,
+        quantity: req.params.quantity
+      });
+        
+      // Send success
+      res.send('{"success":true}');
 		}
 	}
 }
