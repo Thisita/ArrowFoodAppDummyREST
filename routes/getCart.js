@@ -37,7 +37,17 @@ function cart(req, res) {
       }
     });
   } else {
-    //TODO
+    // Check the session for a cart
+    if(!req.session.cart) {
+      // if it isn't there init it
+      req.session.cart = {
+        items: [],
+        updated: Date.now(),
+        created: Date.now()
+      };
+    }
+    // send the session cart to the user
+    res.send(JSON.stringify(req.session.cart));
   }
 }
 
