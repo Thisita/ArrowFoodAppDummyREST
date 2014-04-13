@@ -69,7 +69,7 @@ function user(req, res) {
     // Check to see if enough data is provided to register a user
     if(json.username && json.email && json.name && json.password) {
       // Check and see if the username exists
-      User.find({ 'username' : json.username }, function(err, userData) {
+      User.findOne({ 'username' : json.username }, function(err, userData) {
         if(userData) {
           // log info
           console.log("INFO: Username already taken " + json.username);
@@ -77,7 +77,7 @@ function user(req, res) {
           res.send('{"error":"Username already in use"}');
         } else {
           // Check and see if email exists
-          User.find({ 'email' : json.email }, function(err2, userData2) {
+          User.findOne({ 'email' : json.email }, function(err2, userData2) {
             if(userData2) {
               // log info
               console.log("INFO: Email already taken " + json.email);
