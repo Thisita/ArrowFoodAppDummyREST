@@ -45,7 +45,7 @@ function decode(text) {
 // Helper function for testing passwords
 function checkPassword(attempt, password, salt, cb) {
   // we use pbkdf2 because thisita <3 it
-  pbkdf2(attempt, decode(salt), iterations, keylen, function(err, derivedKey) {
+  crypto.pbkdf2(attempt, decode(salt), iterations, keylen, function(err, derivedKey) {
     if(derivedKey) {
       // encode the key
       var encodedAttempt = encode(derivedKey);
