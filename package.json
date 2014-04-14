@@ -1,12 +1,17 @@
 {
   "name": "ArrowFoodAppREST",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "Ian Zachary Ledrick aka Thisita",
     "email": "thisita@outlook.com"
   },
   "dependencies": {
     "express": "*",
+    "morgan": "*",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "body-parser": "*",
+    "errorhandler": "*",
     "mongoose": "*",
     "connect-mongo": "*",
     "nodetime":"*"

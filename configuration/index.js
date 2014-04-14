@@ -24,33 +24,27 @@ var url = process.env.MONGOHQ_URL || 'mongodb://localhost/afdb';
 module.exports = function(app, express) {
   var MongoStore = require('connect-mongo')(express);
   // global config
-  app.configure(function() {
-    app.use(express.logger());
-    // session
-    app.use(express.cookieParser());
-    app.use(express.session({
-      secret: 'random_data',
-      maxAge: new Date(Date.now() + 3600000),
-      store: new MongoStore({
-        url: url
-      })
-    }));
-    // parse the body
-    app.use(express.bodyParser());
-    // routing
-    app.use(app.router);
-  });
+  app.use(require('morgan')());
+  // session
+  app.use(require('cookie-parser')());
+  app.use(require('express-session')({
+    secret: 'random_data',
+    maxAge: new Date(Date.now() + 3600000),
+    store: new MongoStore({
+      url: url
+    })
+  }));
+  // parse the body
+  app.use(require('body-parser')());
   
   // dev config
-  app.configure('development', function() {
-    app.use(express.errorHandler({
+  if(process.env.NODE_ENV == 'development') {
+    app.use(require('errorhandler')({
       dumpExceptions: true,
       showStack: true
     }));
-  });
-  
-  // prod config
-  app.configure('production', function() {
-    app.use(express.errorHandler());
-  });
+  } else {
+    // prod config
+    app.use(require('errorhandler')());
+  }
 };
