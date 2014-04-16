@@ -93,7 +93,7 @@ function user(req, res) {
               a.username = json.username;
               a.email = json.email;
               a.name = json.name;
-              a.role = 'customer';
+              a.roles.push('customer');
               a.phones = json.phones; // Might have to deep copy
               a.addresss = json.addresss; // Might have to deep copy
               // Generate the salt
