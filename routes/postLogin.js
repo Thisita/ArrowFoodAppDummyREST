@@ -74,6 +74,18 @@ function login(req, res) {
             console.log(user.username + ' logged in');
             // mark the session
             req.session.authenticated = true;
+            req.session.admin = false;
+            req.session.driver = false;
+            // iterate and look for roles
+            for(var i = 0; i < user.roles.length; ++i) {
+              if(user.roles[i] === 'admin') {
+                // we found the admin
+                req.session.admin = true;
+              } else if(user.roles[i] === 'driver') {
+                // we found the driver
+                req.session.driver = true;
+              }
+            }
             // tell the user it was successful
             res.send(JSON.stringify(response));
           } else {
