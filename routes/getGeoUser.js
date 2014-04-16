@@ -40,9 +40,29 @@ function geotag(req, res) {
       }
     });
   } else {
-    // If they aren't authenticated admins
-    // They don't have permission
-    res.send(403);
+    if(req.session.authenticated) {
+      // send them the last one
+      // Get the user's geotags
+      Geotag.find({ username: req.params.username })
+        .sort({ created: -1 }) // sort so we get most recent
+        .limit(1) // limit the num of results
+        .exec(function(err, geotags) {
+          // check for errors
+          if(err) {
+            // log
+            console.log('ERROR: Failed to retrieve ' + req.params.username + '\'s geotags [' + err + ']');
+            // send error
+            res.send(500, err);
+          } else {
+            // Successful in getting data
+            res.send(JSON.stringify(geotags));
+          }
+      });
+    } else {
+      // If they aren't authenticated
+      // They don't have permission
+      res.send(403);
+    }
   }
 }
 
