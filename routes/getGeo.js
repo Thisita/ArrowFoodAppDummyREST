@@ -40,9 +40,9 @@ function geotag(req, res) {
       }
     });
   } else {
-    // If they aren't authenticated we
-    // obviously can't tag the geo data
-    // to their account
+    // If they aren't authenticated admins
+    // They don't get permission for all this data
+    // This route shouldn't be used that often anyways
     res.send(403);
   }
 }
