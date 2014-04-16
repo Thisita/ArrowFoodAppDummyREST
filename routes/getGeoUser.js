@@ -54,8 +54,21 @@ function geotag(req, res) {
             // send error
             res.send(500, err);
           } else {
-            // Successful in getting data
-            res.send(JSON.stringify(geotags));
+            // Check length
+            if(geotags.length < 1) {
+              // send 404
+              res.send(404);
+            } else {
+              // Check the age
+              if(geotags[0].created < Date.now().addDays(-1)) {
+                // The tag is too old to be related to order tracking
+                // Unauth them
+                req.send(403);
+              } else {
+                // Successful in getting data
+                res.send(JSON.stringify(geotags));
+              }
+            }
           }
       });
     } else {
