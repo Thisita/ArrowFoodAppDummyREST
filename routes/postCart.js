@@ -46,7 +46,7 @@ var Menu = mongoose.model('Menu');
  * if you run into trouble, message me
  */
 // Route handling function
-function cart(req, res) {
+function addCart(req, res) {
   req.params.restaraunt = decodeURIComponent(req.params.restaraunt);
   req.params.menu = decodeURIComponent(req.params.menu);
   req.params.item = decodeURIComponent(req.params.item);
@@ -226,5 +226,5 @@ function cart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/cart/:restaraunt/:menu/:item/:quantity', cart);
+  app.post('/cart/:restaraunt/:menu/:item/:quantity', addCart);
 };
