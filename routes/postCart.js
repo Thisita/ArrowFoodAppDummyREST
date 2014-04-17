@@ -107,7 +107,7 @@ function addCart(req, res) {
 									var json = req.body;
 									cart.items.push({
 										restaurant: req.params.restaurant,
-										menu: req.params.menu,
+										name: req.params.menu,
                     item: req.params.item,
 										itemOptions: json,
 										quantity: req.params.quantity});
@@ -141,7 +141,7 @@ function addCart(req, res) {
 				var json = req.body;
 				newCart.items.push({
 					restaurant: req.params.restaurant,
-					menu: req.params.menu,
+					name: req.params.menu,
           item: req.params.item,
 					itemOptions: json,
 					quantity: req.params.quantity});
@@ -189,7 +189,7 @@ function addCart(req, res) {
 								var json = req.body;
 								req.session.cart.items.push({
 									restaurant: req.params.restaurant,
-									menu: req.params.menu,
+									name: req.params.menu,
                   item: req.params.item,
 									itemOptions: json,
 									quantity: req.params.quantity});
@@ -216,7 +216,7 @@ function addCart(req, res) {
       var json = req.body;
       req.session.cart.items.push({
         restaurant: req.params.restaurant,
-        menu: req.params.menu,
+        name: req.params.menu,
         item: req.params.item,
         itemOptions: json,
         quantity: req.params.quantity
