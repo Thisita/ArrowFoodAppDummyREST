@@ -129,8 +129,8 @@ function cart(req, res) {
 				
 				// Save the cart
 				newCart.markModified('items');
-				newCart.save(function(err) {
-					if(err) {
+				newCart.save(function(err, newCart, count) {
+					if(err || count !== 1) {
 						console.error("Error: Failed to save cart addition [" + err + "]");
 						res.send(500);
 						} else {
