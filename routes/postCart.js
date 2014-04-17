@@ -50,6 +50,8 @@ function cart(req, res) {
   req.params.restaraunt = decodeURIComponent(req.params.restaraunt);
   req.params.menu = decodeURIComponent(req.params.menu);
   req.params.item = decodeURIComponent(req.params.item);
+  // debug log
+  console.log('DEBUG: postCart [' + [req.params.restaraunt,req.params.menu,req.params.item] + ']');
 	// Boolean for knowing if the item has been added
 	var added = false;
 	// Check if the user is signed in
