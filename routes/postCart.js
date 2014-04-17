@@ -96,14 +96,14 @@ function cart(req, res) {
 										
 									// Save the cart
 									cart.markModified('items');
-									cart.save(function(err) {
-										 if(err) {
+									cart.save(function(err, cart, count) {
+										 if(err || count !== 1) {
 											console.error("Error: Failed to save cart addition [" + err + "]");
 											res.send(500);
-											} else {
-												// Send success
-												res.send('{"success":true}');
-											}
+                    } else {
+                      // Send success
+                      res.send('{"success":true}');
+                    }
 									});
 									break;
 								}
