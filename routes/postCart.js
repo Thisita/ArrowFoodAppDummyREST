@@ -230,5 +230,5 @@ function addCart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/cart/:restaraunt/:menu/:item/:quantity', addCart);
+  app.post('/cart/:restaurant/:menu/:item/:quantity', addCart);
 };
