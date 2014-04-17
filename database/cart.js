@@ -32,7 +32,7 @@ var cartItemOptionSchema = new mongoose.Schema({
 // Schema for the items in the cart
 var cartItemSchema = new mongoose.Schema({
   menu: String,
-  restraunt: String,
+  restaurant: String,
   item: String,
   itemOptions: [cartItemOptionSchema],
   quantity: Number,
