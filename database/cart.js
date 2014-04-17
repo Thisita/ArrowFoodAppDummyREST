@@ -22,10 +22,20 @@
 // Import mongoose
 var mongoose = require('mongoose');
 
+// Schema for the item options
+var cartItemOptionSchema = new mongoose.Schema({
+  name: String,
+  type: String,
+  param: String,
+  created: { type: Date, default: Date.now }
+});
+
 // Schema for the items in the cart
 var cartItemSchema = new mongoose.Schema({
-  menuId: String,
-  itemId: String,
+  menu: String,
+  restraunt: String,
+  item: String,
+  options: [cartItemOptionSchema],
   quantity: Number,
   total: Number,
   created: { type: Date, default: Date.now },
