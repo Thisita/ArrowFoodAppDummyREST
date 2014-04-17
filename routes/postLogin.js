@@ -142,6 +142,7 @@ function login(req, res) {
             res.send(404);
           }
         });
+      }
     });
   } else {
     // if the syntax is bad let the user know
