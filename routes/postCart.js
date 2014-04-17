@@ -109,7 +109,7 @@ function addCart(req, res) {
 										restaurant: req.params.restaurant,
 										menu: req.params.menu,
                     item: req.params.item,
-										options: json,
+										itemOptions: json,
 										quantity: req.params.quantity});
 										
 									// Save the cart
@@ -143,7 +143,7 @@ function addCart(req, res) {
 					restaurant: req.params.restaurant,
 					menu: req.params.menu,
           item: req.params.item,
-					options: json,
+					itemOptions: json,
 					quantity: req.params.quantity});
 				
 				// Save the cart
@@ -191,7 +191,7 @@ function addCart(req, res) {
 									restaurant: req.params.restaurant,
 									menu: req.params.menu,
                   item: req.params.item,
-									options: json,
+									itemOptions: json,
 									quantity: req.params.quantity});
 									
 								// Send success and break
@@ -218,7 +218,7 @@ function addCart(req, res) {
         restaurant: req.params.restaurant,
         menu: req.params.menu,
         item: req.params.item,
-        options: json,
+        itemOptions: json,
         quantity: req.params.quantity
       });
         

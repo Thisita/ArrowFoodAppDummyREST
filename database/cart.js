@@ -35,7 +35,7 @@ var cartItemSchema = new mongoose.Schema({
   menu: String,
   restraunt: String,
   item: String,
-  options: [cartItemOptionSchema],
+  itemOptions: [cartItemOptionSchema],
   quantity: Number,
   total: Number,
   created: { type: Date, default: Date.now },
