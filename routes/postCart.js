@@ -66,6 +66,12 @@ function cart(req, res) {
 			if(cart) {
 				// Check that the menu exists
 				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
+          if(error) {
+            // log the error
+            console.log('ERROR: ' + err);
+            // send 500
+            res.send(500, err);
+          }
 					if(menu) {
 						for (var i = 0; i < menu.items.length; ++i) {
 							// Check that the item actually exists in the menu
