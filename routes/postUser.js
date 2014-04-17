@@ -50,23 +50,16 @@ function user(req, res) {
   
   // Check session authentication
   if(req.session.authenticated) {
-    if(json.email && json.name
-      && json.addresses && json.phones) {
-      
-      // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phones image icon addresses name' , function(err, userData){
-        if(userData) {
-          // Send profile
-          res.send(JSON.stringify(userData));
-        } else {
-          // Could not find the profile
-          res.send(404);
-        }
-      });
-    } else {
-      // Bad request
-      res.send(400);
-    }
+    // Find the user's profile
+    User.findOne({'username' : req.session.username}, 'username email phones image icon addresses name' , function(err, userData){
+      if(userData) {
+        // Send profile
+        res.send(JSON.stringify(userData));
+      } else {
+        // Could not find the profile
+        res.send(404);
+      }
+    });
   } else {
     // Check to see if enough data is provided to register a user
     if(json.username && json.email && json.name && json.password) {
