@@ -50,11 +50,11 @@ function user(req, res) {
   
   // Check session authentication
   if(req.session.authenticated) {
-    if(json.id && json.email && json.name
-      && json.address && json.phone) {
+    if(json.email && json.name
+      && json.addresses && json.phones) {
       
       // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, userData){
+      User.findOne({'username' : req.session.username}, 'username email phones image icon addresses name' , function(err, userData){
         if(userData) {
           // Send profile
           res.send(JSON.stringify(userData));
