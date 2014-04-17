@@ -26,8 +26,7 @@ var mongoose = require('mongoose');
 var cartItemOptionSchema = new mongoose.Schema({
   name: String,
   type: String,
-  param: String,
-  created: { type: Date, default: Date.now }
+  param: String
 });
 
 // Schema for the items in the cart
