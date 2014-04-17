@@ -133,10 +133,10 @@ function cart(req, res) {
 					if(err || count !== 1) {
 						console.error("Error: Failed to save cart addition [" + err + "]");
 						res.send(500);
-						} else {
-							// Send success
-							res.send('{"success":true}');
-						}
+          } else {
+            // Send success
+            res.send('{"success":true}');
+          }
 				});
 			}
 		});
