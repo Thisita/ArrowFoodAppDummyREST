@@ -32,9 +32,7 @@ var response = {
 };
 
 // Route handling function
-function userProfile(req, res) {
-  var json = JSON.parse(req.body);
-  
+function userProfile(req, res) {  
   // Check session authentication
   if(req.session.authenticated) {
     // Find the user's profile
