@@ -57,7 +57,7 @@ function addCart(req, res) {
 	// Check if the user is signed in
 	if(req.session.authenticated) {
 		Cart.findOne({'username' : req.session.username}, function(err, cart) {
-      if(error) {
+      if(err) {
         // log the error
         console.log('ERROR: ' + err);
         // send 500
