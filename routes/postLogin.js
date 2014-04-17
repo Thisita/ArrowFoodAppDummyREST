@@ -74,6 +74,7 @@ function login(req, res) {
             console.log(user.username + ' logged in');
             // mark the session
             req.session.authenticated = true;
+            req.session.username = user.username;
             req.session.admin = false;
             req.session.driver = false;
             // iterate and look for roles
