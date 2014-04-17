@@ -199,7 +199,7 @@ function addCart(req, res) {
 					}
 				} else {
 					// Error, the menu does not exists
-						
+					console.log('DEBUG: menu does not exis [unauth]');
 					// Send not found because the menu was not found
 					res.send(404);
 				}
