@@ -57,6 +57,12 @@ function cart(req, res) {
 	// Check if the user is signed in
 	if(req.session.authenticated) {
 		Cart.findOne({'username' : req.session.username}, function(err, cart) {
+      if(error) {
+        // log the error
+        console.log('ERROR: ' + err);
+        // send 500
+        res.send(500, err);
+      }
 			if(cart) {
 				// Check that the menu exists
 				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
