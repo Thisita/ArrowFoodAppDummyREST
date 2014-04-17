@@ -106,7 +106,7 @@ function user(req, res) {
               a.name = json.name;
               a.roles.push('customer');
               a.phones = json.phones; // Might have to deep copy
-              a.addresss = json.address; // Might have to deep copy
+              a.addresses = json.addresses; // Might have to deep copy
               // Generate the salt
               a.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
