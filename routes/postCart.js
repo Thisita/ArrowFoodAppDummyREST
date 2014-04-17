@@ -66,7 +66,7 @@ function addCart(req, res) {
 			if(cart) {
 				// Check that the menu exists
 				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
-          if(error) {
+          if(err) {
             // log the error
             console.log('ERROR: ' + err);
             // send 500
