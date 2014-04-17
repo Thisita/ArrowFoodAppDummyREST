@@ -37,26 +37,19 @@ function userProfile(req, res) {
   
   // Check session authentication
   if(req.session.authenticated) {
-    if(json.id && json.email && json.name
-      && json.address && json.phone) {
-      
-      // Find the user's profile
-      User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user) {
-        if(user) {
-          // Send profile
-          res.send(JSON.stringify(user));
-        } else {
-          // Could not find the profile
-          res.send(404);
-        }
-      });
-    } else {
-      // Bad request
-      res.send(400);
-    }
+    // Find the user's profile
+    User.findOne({'username' : req.session.username}, 'username email phone address1 address2 city state zip name' , function(err, user) {
+      if(user) {
+        // Send profile
+        res.send(JSON.stringify(user));
+      } else {
+        // Could not find the profile
+        res.send(404);
+      }
+    });
   } else {
-    // Unauthorized
-    res.send(401);
+    // Bad request
+    res.send(400);
   }
 }
 
