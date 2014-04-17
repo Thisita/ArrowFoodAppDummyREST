@@ -53,8 +53,26 @@ function user(req, res) {
     // Find the user's profile
     User.findOne({'username' : req.session.username}, 'username email phones image icon addresses name' , function(err, userData){
       if(userData) {
-        // Send profile
-        res.send(JSON.stringify(userData));
+        // Store the data
+        if(json.email) userData.email = json.email;
+        if(json.image) userData.image = json.image;
+        if(json.icon) userData.icon = json.icon;
+        if(json.addresses) userData.addresses = json.addresses;
+        if(json.phones) userData.phones = json.phones;
+        if(json.name) userData.name = json.name;
+        // Save the data
+        userData.save(function(err, userData, count) {
+          // Check for error
+          if(err || count !== 1) {
+            // log
+            console.log('ERROR: Update user failed [' + err + '[');
+            // send error
+            res.send(500, err);
+          } else {
+            // send success
+            res.send(JSON.stringify(userData));
+          }
+        });
       } else {
         // Could not find the profile
         res.send(404);
