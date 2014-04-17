@@ -100,12 +100,48 @@ function login(req, res) {
           }
         });
       } else {
-        // log failure
-        console.log('Failed login attempt for ' + json.username + ' (invalid username)');
-        // if we get nothing tell the user
-        // we couldn't find it
-        res.send(404);
-      }
+        // maybe it is email?
+        User.findOne({'email': json.username}, function(err, user) {
+          if(user) {
+            checkPassword(json.password, user.password, user.salt, function(match) {
+              if(match) {
+                // log
+                console.log(user.username + ' logged in');
+                // mark the session
+                req.session.authenticated = true;
+                req.session.username = user.username;
+                req.session.admin = false;
+                req.session.driver = false;
+                // iterate and look for roles
+                for(var i = 0; i < user.roles.length; ++i) {
+                  if(user.roles[i] === 'admin') {
+                    // we found the admin
+                    req.session.admin = true;
+                  } else if(user.roles[i] === 'driver') {
+                    // we found the driver
+                    req.session.driver = true;
+                  }
+                }
+                // tell the user it was successful
+                res.send(JSON.stringify(response));
+              } else {
+                // log the failure
+                console.log('Failed login attempt for ' + user.username + ' (invalid password)');
+                // tell the user we could not find
+                // why no access denied? because we don't want
+                // attackers to tell the difference from
+                // no account
+                res.send(404);
+              }
+            });
+          } else {
+            // log failure
+            console.log('Failed login attempt for ' + json.username + ' (invalid username)');
+            // if we get nothing tell the user
+            // we couldn't find it
+            res.send(404);
+          }
+        });
     });
   } else {
     // if the syntax is bad let the user know
