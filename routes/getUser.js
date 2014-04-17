@@ -32,7 +32,7 @@ var response = {
 };
 
 // Route handling function
-function profile(req, res) {
+function userProfile(req, res) {
   var json = JSON.parse(req.body);
   
   // Check session authentication
@@ -62,5 +62,5 @@ function profile(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/profile', profile);
+  app.get('/user', userProfile);
 };
