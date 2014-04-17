@@ -24,7 +24,7 @@ var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 
 // Route handling function
-function cart(req, res) {
+function getCart(req, res) {
   if(req.session.authenticated) {
     // Find the user's cart
     Cart.findOne({'username' : req.session.username}, function(err, cart) {
@@ -53,5 +53,5 @@ function cart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/cart', cart);
+  app.get('/cart', getCart);
 };
