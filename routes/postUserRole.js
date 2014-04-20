@@ -27,9 +27,6 @@ var response = {};
 
 // Route handling function
 function user(req, res) {
-  console.log(JSON.stringify(req.body));
-  var json = req.body;
-  
   // Check session authentication and admin
   if(req.session.authenticated && req.session.admin) {
     // Find the user's profile
