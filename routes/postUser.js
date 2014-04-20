@@ -1,4 +1,4 @@
-﻿/*
+/*
     ArrowFoodAppREST
     Copyright © 2014 Ian Zachary Ledrick, also known as Thisita.
     
@@ -60,6 +60,7 @@ function user(req, res) {
         if(json.addresses) userData.addresses = json.addresses;
         if(json.phones) userData.phones = json.phones;
         if(json.name) userData.name = json.name;
+        userData.updated = Date.now();
         // Save the data
         userData.save(function(err, userData, count) {
           // Check for error
