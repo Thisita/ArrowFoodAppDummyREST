@@ -1,4 +1,4 @@
-﻿/*
+/*
     ArrowFoodAppREST
     Copyright © 2014 Ian Zachary Ledrick, also known as Thisita.
     
@@ -62,7 +62,8 @@ var userSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
   orders: { type: Number, default: 0 },
-  deliveries: { type: Number, default: 0 }
+  deliveries: { type: Number, default: 0 },
+  locked: { type: Boolean, default: false }
 });
 
 var User = module.exports = mongoose.model('User', userSchema);

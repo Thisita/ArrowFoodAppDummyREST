@@ -63,37 +63,43 @@ function checkPassword(attempt, password, salt, cb) {
 function doUsername(req, res, json) {
   User.findOne({'username': json.username}, function(err, user) {
     if(user) {
-      checkPassword(json.password, user.password, user.salt, function(match) {
-        if(match) {
-          // log
-          console.log(user.username + ' logged in');
-          // mark the session
-          req.session.authenticated = true;
-          req.session.username = user.username;
-          req.session.admin = false;
-          req.session.driver = false;
-          // iterate and look for roles
-          for(var i = 0; i < user.roles.length; ++i) {
-            if(user.roles[i] === 'admin') {
-              // we found the admin
-              req.session.admin = true;
-            } else if(user.roles[i] === 'driver') {
-              // we found the driver
-              req.session.driver = true;
+      // check if the account is locked
+      if(user.locked) {
+        // tell the user
+        res.send(403, 'Account is locked');
+      } else {
+        checkPassword(json.password, user.password, user.salt, function(match) {
+          if(match) {
+            // log
+            console.log(user.username + ' logged in');
+            // mark the session
+            req.session.authenticated = true;
+            req.session.username = user.username;
+            req.session.admin = false;
+            req.session.driver = false;
+            // iterate and look for roles
+            for(var i = 0; i < user.roles.length; ++i) {
+              if(user.roles[i] === 'admin') {
+                // we found the admin
+                req.session.admin = true;
+              } else if(user.roles[i] === 'driver') {
+                // we found the driver
+                req.session.driver = true;
+              }
             }
+            // tell the user it was successful
+            res.send(JSON.stringify(response));
+          } else {
+            // log the failure
+            console.log('Failed login attempt for ' + user.username + ' (invalid password)');
+            // tell the user we could not find
+            // why no access denied? because we don't want
+            // attackers to tell the difference from
+            // no account
+            res.send(404);
           }
-          // tell the user it was successful
-          res.send(JSON.stringify(response));
-        } else {
-          // log the failure
-          console.log('Failed login attempt for ' + user.username + ' (invalid password)');
-          // tell the user we could not find
-          // why no access denied? because we don't want
-          // attackers to tell the difference from
-          // no account
-          res.send(404);
-        }
-      });
+        });
+      }
     } else {
       // maybe it is email?
       doEmail(req, res, json);

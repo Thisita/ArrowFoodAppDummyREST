@@ -14,6 +14,7 @@
     "errorhandler": "*",
     "mongoose": "*",
     "connect-mongo": "*",
+    "nodemailer": "*",
     "nodetime":"*"
   }
 }
