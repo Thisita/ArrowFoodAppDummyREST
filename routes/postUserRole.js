@@ -37,7 +37,7 @@ function user(req, res) {
       if(userData) {
         // Store the data
         userData.roles.push(req.params.role);
-        user.Data.markModified('roles');
+        userData.markModified('roles');
         // Save the data
         userData.save(function(err, userData, count) {
           // Check for error
