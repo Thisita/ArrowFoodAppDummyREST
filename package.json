@@ -6,6 +6,7 @@
     "email": "thisita@outlook.com"
   },
   "dependencies": {
+    "crypto": "*",
     "express": "*",
     "morgan": "*",
     "cookie-parser": "*",
