@@ -24,7 +24,7 @@ var mongoose = require('mongoose');
 var Restaurant = mongoose.model('Restaurant');
 
 // Route handling function
-function restaurants(req, res) {
+function editRestaurant(req, res) {
   // make sure the user is authenticated and an admin
   if(req.session.authenticated && req.session.admin) {
     Restaurant.findOne({ name: req.body.name }, function(err, restaurant) {
@@ -94,5 +94,5 @@ function restaurants(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/restaurants', restaurants);
+  app.post('/restaurant', editRestaurant);
 };
