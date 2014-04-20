@@ -81,7 +81,7 @@ function addCart(req, res) {
 									if(cart.items[j] == req.params.item) {
 										// Increment the quantity
 										cart.items[i].quantity += req.params.quantity;
-										
+										cart.updated = Date.now();
 										// Save the cart
 										cart.markModified('items');
 										cart.save(function(err) {
@@ -111,7 +111,7 @@ function addCart(req, res) {
                     item: req.params.item,
 										itemOptions: json,
 										quantity: req.params.quantity});
-										
+								  cart.updated = Date.now();
 									// Save the cart
 									cart.markModified('items');
 									cart.save(function(err, cart, count) {
@@ -145,7 +145,6 @@ function addCart(req, res) {
           item: req.params.item,
 					itemOptions: json,
 					quantity: req.params.quantity});
-				
 				// Save the cart
 				newCart.markModified('items');
 				newCart.save(function(err, newCart, count) {
@@ -193,7 +192,7 @@ function addCart(req, res) {
                   item: req.params.item,
 									itemOptions: json,
 									quantity: req.params.quantity});
-									
+								req.session.cart.updated = Date.now();
 								// Send success and break
 								res.send('{"success":true}');
 								break;
@@ -221,7 +220,7 @@ function addCart(req, res) {
         itemOptions: json,
         quantity: req.params.quantity
       });
-        
+      req.session.cart.created = req.session.updated = Date.now();
       // Send success
       res.send('{"success":true}');
 		}
