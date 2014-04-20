@@ -26,11 +26,8 @@ var mongoose = require('mongoose');
 // images are PNGs
 var couponSchema = new mongoose.Schema({
   token: String,
-  image: Buffer,
-  icon: Buffer,
   type: String,
   param: String,
-  updated: { type: Date, default: Date.now },
   created: { type: Date, default: Date.now },
   claims: { type: Number, default: 0 }
 });
