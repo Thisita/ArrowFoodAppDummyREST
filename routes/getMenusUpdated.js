@@ -25,7 +25,7 @@ var Menu = mongoose.model('Menu');
 
 // Route handling function
 function menusUpdated(req, res) {
-  Menu.find({}, function(err, menus) {
+  Menu.find({}, 'updated', function(err, menus) {
     if (menus) {
       var updated = menus[0].updated;
       for(var i = 1; i < menus.length; ++i) {
