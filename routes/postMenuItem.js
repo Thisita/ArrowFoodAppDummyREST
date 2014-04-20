@@ -67,6 +67,7 @@ function editMenuItem(req, res) {
             });
             menu.markModified('items');
           }
+          menu.updated = Date.now();
           // Save the changes
           menu.save(function(err, menu, count) {
             // check for err
