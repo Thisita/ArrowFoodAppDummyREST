@@ -25,56 +25,63 @@ var Menu = mongoose.model('Menu');
 
 // Route handling function
 function editMenu(req, res) {
-  Menu.findOne({ restaurant: req.body.restaurant, name: req.body.name }, function(err, menu) {
-    // look for an error
-    if(err) {
-      // log
-      console.log('ERROR: Failed to look up menu [' + err + ']');
-      // send error
-      res.send(500, err);
-    } else {
-      if(menu) {
-        // update existing menu
-        if(req.body.image) menu.image = req.body.image;
-        if(req.body.icon) menu.icon = req.body.icon;
-        if(req.body.tags) menu.tags = req.body.tags;
-        // save the changes
-        menu.save(function(err, menu, count) {
-          // check for error
-          if(err || count != 1) {
-            // log
-            console.log('ERROR: Could not update menu [' + err + ']');
-            // send the bad news
-            res.send(500, err);
-          } else {
-            // send the good news
-            res.send('{"success":true}');
-          }
-        });
+  // make sure user is authenticate and admin
+  if(req.session.authenticated && req.session.admin) {
+    // look in the db for the menu
+    Menu.findOne({ restaurant: req.body.restaurant, name: req.body.name }, function(err, menu) {
+      // look for an error
+      if(err) {
+        // log
+        console.log('ERROR: Failed to look up menu [' + err + ']');
+        // send error
+        res.send(500, err);
       } else {
-        // Create new menu
-        var a = new Menu();
-        a.restraunt = req.body.restaurant;
-        a.name = req.body.name;
-        a.image = req.body.image;
-        a.icon = req.body.icon;
-        a.tags = req.body.tags;
-        // save it
-        a.save(function(err, a, count) {
-          // look for error
-          if(err || count !== 1) {
-            // log
-            console.log('ERROR: Could not create new menu [' + err + ']');
-            // send error
-            res.send(500, err);
-          } else {
-            // send the good news
-            res.send('{"success":true}');
-          }
-        });
+        if(menu) {
+          // update existing menu
+          if(req.body.image) menu.image = req.body.image;
+          if(req.body.icon) menu.icon = req.body.icon;
+          if(req.body.tags) menu.tags = req.body.tags;
+          // save the changes
+          menu.save(function(err, menu, count) {
+            // check for error
+            if(err || count != 1) {
+              // log
+              console.log('ERROR: Could not update menu [' + err + ']');
+              // send the bad news
+              res.send(500, err);
+            } else {
+              // send the good news
+              res.send('{"success":true}');
+            }
+          });
+        } else {
+          // Create new menu
+          var a = new Menu();
+          a.restraunt = req.body.restaurant;
+          a.name = req.body.name;
+          a.image = req.body.image;
+          a.icon = req.body.icon;
+          a.tags = req.body.tags;
+          // save it
+          a.save(function(err, a, count) {
+            // look for error
+            if(err || count !== 1) {
+              // log
+              console.log('ERROR: Could not create new menu [' + err + ']');
+              // send error
+              res.send(500, err);
+            } else {
+              // send the good news
+              res.send('{"success":true}');
+            }
+          });
+        }
       }
-    }
-  });
+    });
+  } else {
+    // tell them they aren't allowed
+    res.send(403);
+  }
 }
 
 // Export the route association function
