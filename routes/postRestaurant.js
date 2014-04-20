@@ -94,5 +94,5 @@ function restaurants(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/restaurants', restaurants);
+  app.post('/restaurants', restaurants);
 };
