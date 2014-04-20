@@ -41,6 +41,7 @@ function editMenu(req, res) {
           if(req.body.image) menu.image = req.body.image;
           if(req.body.icon) menu.icon = req.body.icon;
           if(req.body.tags) menu.tags = req.body.tags;
+          menu.updated = Date.now();
           // save the changes
           menu.save(function(err, menu, count) {
             // check for error
