@@ -23,23 +23,15 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var response = {
-  id: 'id',
-  email: 'email',
-  name: 'name',
-  address: 'address',
-  phone: 'phone'
-};
-
 // Route handling function
-function userProfile(req, res) {  
+function userProfileUpdated(req, res) {  
   // Check session authentication
   if(req.session.authenticated) {
     // Find the user's profile
-    User.findOne({'username' : req.session.username}, 'username email phones addresses achievements name icon image roles created updated orders deliveries' , function(err, user) {
+    User.findOne({'username' : req.session.username}, 'updated' , function(err, user) {
       if(user) {
         // Send profile
-        res.send(JSON.stringify(user));
+        res.send('{"updated":' + user.updated + '}');
       } else {
         // Could not find the profile
         res.send(404);
@@ -53,5 +45,5 @@ function userProfile(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.get('/user', userProfile);
+  app.get('/user/updated', userProfileUpdated);
 };
