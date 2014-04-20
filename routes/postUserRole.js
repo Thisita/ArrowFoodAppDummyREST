@@ -33,7 +33,7 @@ function user(req, res) {
   // Check session authentication and admin
   if(req.session.authenticated && req.session.admin) {
     // Find the user's profile
-    User.findOne({'username' : req.session.username}, 'roles' , function(err, userData){
+    User.findOne({'username' : req.params.username}, 'roles' , function(err, userData){
       if(userData) {
         // Store the data
         userData.roles.push(req.params.role);
@@ -64,5 +64,5 @@ function user(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.post('/user/role/:role', user);
+  app.post('/user/:username/role/:role', user);
 };
