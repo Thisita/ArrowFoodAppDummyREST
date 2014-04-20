@@ -26,7 +26,7 @@ var Order = mongoose.model('Order');
 // Route handling function
 function ordersUpdated(req, res) {
   if(req.session.authenticated) {
-    Order.find({'username' : req.session.username}, function(err, orders) {
+    Order.find({'username' : req.session.username}, 'updated', function(err, orders) {
       if (orders) {
         var updated = orders[0].updated;
         for(var i = 1; i < orders.length; ++i) {
