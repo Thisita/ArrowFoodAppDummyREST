@@ -88,7 +88,7 @@ function user(req, res) {
           // log info
           console.log("INFO: Username already taken " + json.username);
           // The username exists, error out
-          res.send('{"error":"Username already in use"}');
+          res.send(400, 'Username already in use');
         } else {
           // Check and see if email exists
           User.findOne({ 'email' : json.email }, function(err2, userData2) {
@@ -96,7 +96,7 @@ function user(req, res) {
               // log info
               console.log("INFO: Email already taken " + json.email);
               // The email exists, error out
-              res.send('{"error":"Email already in use"}');
+              res.send(400, 'Email already in use');
             } else {
               // log info
               console.log("INFO: Creating user " + json.username);
@@ -121,19 +121,19 @@ function user(req, res) {
                       // log error
                       console.log("ERROR: " + err4);
                       // Something broke so tell the user
-                      res.send(500);
+                      res.send(500, err4);
                     } else {
                       // log info
                       console.log("INFO: User " + a.username + " created");
                       // Send a success response
-                      res.send('{"error":false}');
+                      res.send('{"success":true}');
                     }
                   });
                 } else {
                   // log error
                   console.log("ERROR: " + err3);
                   // Something broke so tell the user
-                  res.send(500);
+                  res.send(500, err3);
                 }
               });
             }
