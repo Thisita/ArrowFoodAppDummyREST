@@ -60,7 +60,7 @@ function user(req, res) {
         if(json.addresses) userData.addresses = json.addresses;
         if(json.phones) userData.phones = json.phones;
         if(json.name) userData.name = json.name;
-        userData.updated = Date.now();
+        userData.updated = new Date();
         // Save the data
         userData.save(function(err, userData, count) {
           // Check for error
