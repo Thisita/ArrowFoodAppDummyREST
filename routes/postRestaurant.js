@@ -45,7 +45,7 @@ function editRestaurant(req, res) {
           if(req.body.emails) restaurant.emails = req.body.emails;
           if(req.body.phones) restaurant.phones = req.body.phones;
           if(req.body.addresses) restaurant.addresses = req.body.addresses;
-          restaurant.updated = Date.now();
+          restaurant.updated = new Date();
           // save
           restaurant.save(function(err, restaurant, count) {
             // check for err
