@@ -61,7 +61,7 @@ function resetPassword(req, res) {
               // Generate the salt
               user.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
-              crypto.pbkdf2(json.password, decode(a.salt), iterations, keylen, function(err3, derivedKey) {
+              crypto.pbkdf2(json.password, decode(user.salt), iterations, keylen, function(err3, derivedKey) {
                 // Make sure the crypto didn't die
                 if(derivedKey) {
                   // Store the hashed password
