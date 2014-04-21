@@ -78,6 +78,8 @@ function resetPassword(req, res) {
                       console.log("INFO: User " + a.username + " reset");
                       // Send a success response
                       res.send('{"success":true}');
+                      // remove the passwordReset with blind faith
+                      passwordReset.remove(function(err){});
                     }
                   });
                 } else {
