@@ -67,6 +67,7 @@ function resetPassword(req, res) {
                   // Store the hashed password
                   user.password = encode(derivedKey);
                   user.locked = false;
+                  user.updated = new Date();
                   user.save(function(err4, user, count) {
                     if(err4 || count !== 1) {
                       // log error
