@@ -40,7 +40,7 @@ function updateOrderStatus(req, res) {
           authority: req.session.username,
           state: req.body.state
         });
-        order.updated = Date.now();
+        order.updated = new Date();
         order.markModified('updates');
         // save
         order.save(function(err, order, count) {
