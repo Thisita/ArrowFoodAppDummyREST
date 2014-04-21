@@ -67,7 +67,6 @@ function doUsername(req, res, json) {
       if(user.locked) {
         // tell the user
         res.send(403, 'Account is locked');
-        return;
       } else {
         checkPassword(json.password, user.password, user.salt, function(match) {
           if(match) {
