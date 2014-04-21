@@ -46,6 +46,7 @@ function deleteMenuItem(req, res) {
               // remove the item
               menu.items.splice(i, 1);
               menu.markModified('items');
+              menu.updated = new Date();
               // save the changes
               menu.save(function(err, menu, count) {
                 // check for err
