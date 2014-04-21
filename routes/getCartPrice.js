@@ -42,7 +42,7 @@ function getCartPrice(req, res) {
                 && cart.items[i].menu === menus[j].name) {
                   for(var k = 0; k < menus[j].items.length; ++k) {
                     if(cart.items[i].item === menus[j].items[k].name) {
-                      price += menus[j].items[k].price;
+                      cart.total += menus[j].items[k].price;
                       // break out of items loop
                       break;
                     }
@@ -52,7 +52,7 @@ function getCartPrice(req, res) {
                 }
             }
           }
-          cart.price += deliveryFee;
+          cart.total += deliveryFee;
           cart.updated = Date.now();
           // save the cart total
           cart.save(function(err, cart, count) {
