@@ -133,7 +133,7 @@ function doEmail(req, res, json) {
           res.send(JSON.stringify(response));
         } else {
           // log the failure
-          console.log('Failed login attempt for ' + user.username + ' (invalid password)');
+          console.log('Failed login attempt for ' + json.username + ' (invalid password)');
           // tell the user we could not find
           // why no access denied? because we don't want
           // attackers to tell the difference from
