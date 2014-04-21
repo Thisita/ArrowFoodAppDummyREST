@@ -59,32 +59,32 @@ function resetPassword(req, res) {
           User.findOne({'username': passwordReset.username}, function(err, user) {
             if(user) {
               // Generate the salt
-              a.salt = crypto.randomBytes(saltSize).toString('base64');
+              user.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
               crypto.pbkdf2(json.password, decode(a.salt), iterations, keylen, function(err3, derivedKey) {
                 // Make sure the crypto didn't die
                 if(derivedKey) {
                   // Store the hashed password
-                  a.password = encode(derivedKey);
-                  a.locked = false;
-                  a.save(function(err4, a, count) {
+                  user.password = encode(derivedKey);
+                  user.locked = false;
+                  user.save(function(err4, user, count) {
                     if(err4 || count !== 1) {
                       // log error
                       console.log("ERROR: " + err4);
                       // Something broke so tell the user
-                      res.send(500);
+                      res.send(500, err4);
                     } else {
                       // log info
-                      console.log("INFO: User " + a.username + " created");
+                      console.log("INFO: User " + a.username + " reset");
                       // Send a success response
-                      res.send('{"error":false}');
+                      res.send('{"success":true}');
                     }
                   });
                 } else {
                   // log error
                   console.log("ERROR: " + err3);
                   // Something broke so tell the user
-                  res.send(500);
+                  res.send(500, err3);
                 }
               });
               // tell the user it was successful
