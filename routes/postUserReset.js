@@ -49,7 +49,7 @@ function resetPassword(req, res) {
           res.send(500, err);
         } else {
           // store the token
-          a.token = crypto.createHash('md5').update(buf).digest('base64');
+          a.token = crypto.createHash('md5').update(buf).digest('hex');
           // set the expiration
           a.expiration = (new Date()).setDate((new Date()).getDate() + expiration);
           // save the doc
