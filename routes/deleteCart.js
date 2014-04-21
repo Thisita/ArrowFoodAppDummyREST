@@ -34,7 +34,7 @@ function cart(req, res) {
             res.send(500);
            } else {
             // Return success
-            res.send('{"error":false}');
+            res.send('{"success":true}');
            }
         });
       } else {
