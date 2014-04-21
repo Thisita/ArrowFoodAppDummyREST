@@ -71,7 +71,7 @@ function resetPassword(req, res) {
               });
               // lock the account
               user.locked = true;
-              user.updated = Date.now();
+              user.updated = new Date();
               // Save the locked
               user.save(function(err, user, count) {
                 // look for error
