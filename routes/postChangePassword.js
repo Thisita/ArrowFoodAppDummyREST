@@ -90,7 +90,7 @@ function changePassword(req, res) {
                       res.send(500);
                     } else {
                       // log info
-                      console.log("INFO: User " + a.username + " created");
+                      console.log("INFO: User " + a.username + " password changed");
                       // Send a success response
                       res.send('{"error":false}');
                     }
