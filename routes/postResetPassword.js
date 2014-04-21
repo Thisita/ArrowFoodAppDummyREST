@@ -75,7 +75,7 @@ function resetPassword(req, res) {
                       res.send(500, err4);
                     } else {
                       // log info
-                      console.log("INFO: User " + a.username + " reset");
+                      console.log("INFO: User " + user.username + " reset");
                       // Send a success response
                       res.send('{"success":true}');
                       // remove the passwordReset with blind faith
