@@ -42,6 +42,7 @@ function user(req, res) {
             // remove the role
             userData.roles.splice(i, 1);
             userData.markModified('roles');
+            userData.updated = new Date();
             // Save the data
             userData.save(function(err, userData, count) {
               // Check for error
