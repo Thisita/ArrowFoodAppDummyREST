@@ -89,7 +89,7 @@ function resetPassword(req, res) {
     } else {
       // Could not find user doc
       // log
-      console.log('ERROR: Could not find user [' + passwordReset.username + ']');
+      console.log('ERROR: Could not find user [' + user.username + ']');
       // send not found error
       res.send(404);
     }
