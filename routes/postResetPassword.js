@@ -54,7 +54,7 @@ function resetPassword(req, res) {
     PasswordReset.findOne({'token': req.params.token}, function(err, passwordReset) {
       // make sure it exists
       if(passwordReset) {
-        if(Date.now < passwordReset.expiration) {
+        if((new Date()) < passwordReset.expiration) {
         // find the user attached to the token
           User.findOne({'username': passwordReset.username}, function(err, user) {
             if(user) {
