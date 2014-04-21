@@ -34,7 +34,7 @@ var expiration = 3; // days
 
 // Route handling function
 function resetPassword(req, res) {
-  User.findOne({'username': passwordReset.username}, function(err, user) {
+  User.findOne({'username': req.params.username}, function(err, user) {
     if(user) {
       // Generate a new token
       var a = new PasswordReset();
