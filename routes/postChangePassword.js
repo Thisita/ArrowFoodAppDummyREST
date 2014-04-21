@@ -74,15 +74,15 @@ function changePassword(req, res) {
           checkPassword(json.oldPassword, user.password, user.salt, function(match) {
             if(match) {
               // Generate the salt
-              a.salt = crypto.randomBytes(saltSize).toString('base64');
+              user.salt = crypto.randomBytes(saltSize).toString('base64');
               // PBKDF2 hash the password
-              crypto.pbkdf2(json.password, decode(a.salt), iterations, keylen, function(err3, derivedKey) {
+              crypto.pbkdf2(json.password, decode(user.salt), iterations, keylen, function(err3, derivedKey) {
                 // Make sure the crypto didn't die
                 if(derivedKey) {
                   // Store the hashed password
-                  a.password = encode(derivedKey);
-                  a.updated = new Date();
-                  a.save(function(err4, a, count) {
+                  user.password = encode(derivedKey);
+                  user.updated = new Date();
+                  user.save(function(err4, a, count) {
                     if(err4 || count !== 1) {
                       // log error
                       console.log("ERROR: " + err4);
@@ -111,7 +111,7 @@ function changePassword(req, res) {
               // why no access denied? because we don't want
               // attackers to tell the difference from
               // no account
-              res.send(404);
+              res.send(403);
             }
           });
         } else {
