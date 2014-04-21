@@ -75,7 +75,7 @@ function resetPassword(req, res) {
               // Save the locked
               user.save(function(err, user, count) {
                 // look for error
-                if(err || count !== 0) {
+                if(err || count !== 1) {
                   // log
                   console.log('ERROR: Could not lock the user account after creating password reset document [' + err + ']');
                 }
