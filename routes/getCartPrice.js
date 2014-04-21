@@ -24,6 +24,9 @@ var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 var Menu = mongoose.model('Menu');
 
+// consts
+var deliveryFee = 5.00; // The service cost :)
+
 // Route handling function
 function getCartPrice(req, res) {
   if(req.session.authenticated) {
@@ -49,6 +52,7 @@ function getCartPrice(req, res) {
                 }
             }
           }
+          cart.price += deliveryFee;
           cart.updated = Date.now();
           // save the cart total
           cart.save(function(err, cart, count) {
