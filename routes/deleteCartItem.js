@@ -46,6 +46,7 @@ function cart(req, res) {
 										
 										// Save the cart
 										cart.markModified('items');
+                    cart.updated = new Date();
 										cart.save(function(err) {
 										 if(err) {
 											console.error("Error: Failed to delete cart item [" + err + "]");
@@ -65,6 +66,7 @@ function cart(req, res) {
 										
 										// Save the cart
 										cart.markModified('items');
+                    cart.updated = new Date();
 										cart.save(function(err) {
 										 if(err) {
 											console.error("Error: Failed to delete cart item [" + err + "]");
@@ -117,7 +119,7 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
-										
+										req.session.cart.updated = new Date();
 										// Send success
 										res.send('{"success":true}');
 										break;
@@ -127,7 +129,7 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
-										
+										req.session.cart.updated = new Date();
 										// Send success
 										res.send('{"success":true}');
 										break;
