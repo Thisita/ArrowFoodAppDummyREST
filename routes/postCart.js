@@ -47,11 +47,11 @@ var Menu = mongoose.model('Menu');
  */
 // Route handling function
 function addCart(req, res) {
-  req.params.restaraunt = decodeURIComponent(req.params.restaraunt);
+  req.params.restaurant = decodeURIComponent(req.params.restaurant);
   req.params.menu = decodeURIComponent(req.params.menu);
   req.params.item = decodeURIComponent(req.params.item);
   // debug log
-  console.log('DEBUG: postCart [' + [req.params.restaraunt,req.params.menu,req.params.item] + ']');
+  console.log('DEBUG: postCart [' + [req.params.restaurant,req.params.menu,req.params.item] + ']');
 	// Boolean for knowing if the item has been added
 	var added = false;
 	// Check if the user is signed in
