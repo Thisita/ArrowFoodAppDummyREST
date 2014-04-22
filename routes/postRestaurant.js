@@ -63,8 +63,8 @@ function editRestaurant(req, res) {
           // Create
           var a = new Restaurant();
           a.name = req.body.name;
-          a.image = req.body.image;
-          a.icon = req.body.icon;
+          if(req.body.image) a.image = req.body.image;
+          if(req.body.icon) a.icon = req.body.icon;
           a.description = req.body.description;
           a.tags = req.body.tags;
           a.emails = req.body.emails;
