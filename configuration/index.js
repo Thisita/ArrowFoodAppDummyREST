@@ -29,7 +29,9 @@ module.exports = function(app, express) {
   app.use(require('cookie-parser')());
   app.use(require('express-session')({
     secret: 'random_data',
-    expires: new Date(Date.now() + 100 * 60 * 60 * 24),
+    cookie: {
+      maxAge: 60000 * 60 * 24
+    },
     store: new MongoStore({
       url: url
     })
