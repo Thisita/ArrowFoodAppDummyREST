@@ -23,7 +23,7 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 
 // get a default image
-var dImage = fs.loadFileSync('jolly.png');
+var dImage = fs.readFileSync('jolly.png');
 
 // A schema for address
 // They get a nickname for user search purposes
