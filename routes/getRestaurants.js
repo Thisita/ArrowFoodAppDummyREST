@@ -25,9 +25,10 @@ var Restaurant = mongoose.model('Restaurant');
 
 // Route handling function
 function restaurants(req, res) {
+  // Allow admin page to get data
+  res.set('Access-Control-Allow-Origin', '*');
   Restaurant.find({}, function(err, docs) {
     if (docs) {
-      res.set('Access-Control-Allow-Origin', '*');
       res.send(JSON.stringify(docs));
     } else {
       // Could not find the menus
