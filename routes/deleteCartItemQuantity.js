@@ -40,7 +40,7 @@ function cart(req, res) {
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
 									// Check the quantity
-									if(req.session.cart.items[i].quantity > req.params.quantity) {
+									if(cart.items[i].quantity > req.params.quantity) {
 										// Decrement quantity of there is more than one
 										cart.items[i].quantity -= req.params.quantity;
 										
