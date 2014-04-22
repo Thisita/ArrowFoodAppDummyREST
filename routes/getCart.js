@@ -53,6 +53,17 @@ function getCart(req, res) {
                 }
               }
             }
+            // save the updates
+            cart.save(function(err, cart, quantity) {
+              // check err
+              if(err || quantity !== 1) {
+                // log
+                console.log('ERROR: cart not updated [' + err + ']');
+              } else {
+                // log
+                console.log('INFO: cart totals updated [' + err + ']');
+              }
+            });
             // Send the cart
             res.send(JSON.stringify(cart));
           } else {
