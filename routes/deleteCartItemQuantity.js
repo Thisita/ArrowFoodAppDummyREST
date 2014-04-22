@@ -22,6 +22,7 @@
 // Mongoose imports
 var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
+var Menu = mongoose.model('Menu');
 
 // Route handling function
 function cart(req, res) {
