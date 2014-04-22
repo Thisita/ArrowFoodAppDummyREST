@@ -27,6 +27,7 @@ var Restaurant = mongoose.model('Restaurant');
 function restaurants(req, res) {
   Restaurant.find({}, function(err, docs) {
     if (docs) {
+      res.set('Access-Control-Allow-Origin', '*');
       res.send(JSON.stringify(docs));
     } else {
       // Could not find the menus
