@@ -25,6 +25,8 @@ var Order = mongoose.model('Order');
 
 // Route handling function
 function orders(req, res) {
+  // Allow admin page to get data
+  res.set('Access-Control-Allow-Origin', '*');
   if(req.session.authenticated) {
     Order.find({'username' : req.session.username}, function(err, orders) {
       if (orders) {
