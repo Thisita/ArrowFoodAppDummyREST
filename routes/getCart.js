@@ -62,7 +62,7 @@ function getCart(req, res) {
                 console.log('ERROR: cart not updated [' + err + ']');
               } else {
                 // log
-                console.log('INFO: cart totals updated [' + err + ']');
+                console.log('INFO: cart totals updated');
               }
             });
             // Send the cart
