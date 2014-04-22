@@ -25,6 +25,8 @@ var Menu = mongoose.model('Menu');
 
 // Route handling function
 function menus(req, res) {
+  // Allow admin page to get data
+  res.set('Access-Control-Allow-Origin', '*');
   Menu.find({}, function(err, menus) {
     if (menus) {
       res.send(JSON.stringify(menus));
