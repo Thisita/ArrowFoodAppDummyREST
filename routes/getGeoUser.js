@@ -25,6 +25,8 @@ var Geotag = mongoose.model('Geotag');
 
 // Route handling function
 function geotag(req, res) {
+  // Allow admin page to get data
+  res.set('Access-Control-Allow-Origin', '*');
   // Check if the user is auth
   if(req.session.authenticated && req.session.admin) {
     // Get all the user's geotags
