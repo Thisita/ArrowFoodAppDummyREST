@@ -42,7 +42,7 @@ function getCart(req, res) {
             for(var i = 0; i < cart.items.length; ++i) {
               for(var j = 0; j < menus.length; ++j) {
                 if(menus[j].name === cart.items[i].menu
-                  && menus[j].restaurant === cart.items[i]) {
+                  && menus[j].restaurant === cart.items[i].restaurant) {
                   for(var k = 0; k < menus[j].items.length; ++k) {
                     if(menus[j].items[k].name === cart.items[i].item) {
                       cart.items[i].total = cart.items[i].quantity * menus[j].items[k].price;
@@ -53,6 +53,7 @@ function getCart(req, res) {
                 }
               }
             }
+            cart.markModified('items');
             // save the updates
             cart.save(function(err, cart, quantity) {
               // check err
