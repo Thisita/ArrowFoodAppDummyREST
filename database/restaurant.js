@@ -20,6 +20,10 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var fs = require('fs');
+
+// get a default image
+var dImage = fs.loadFileSync('jolly.png');
 
 // A schema for address
 // They get a nickname for user search purposes
@@ -52,8 +56,8 @@ var emailSchema = new mongoose.Schema({
 // images are png
 var restaurantSchema = new mongoose.Schema({
   name: String,
-  image: Buffer,
-  icon: Buffer,
+  image: { type: Buffer, default: dImage },
+  icon: { type: Buffer, default: dImage },
   description: String,
   tags: [String],
   emails: [emailSchema],
