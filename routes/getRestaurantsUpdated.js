@@ -35,7 +35,7 @@ function restaurantsUpdated(req, res) {
         }
       }
       // send it
-      res.send('{"updated":' + updated + '}');
+      res.send('{"updated":"' + updated.toISOString() + '"}');
     } else {
       // Could not find the menus
       res.send(404);
