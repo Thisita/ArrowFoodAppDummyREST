@@ -33,7 +33,7 @@ function menusUpdated(req, res) {
           updated = menus[i].updated;
         }
       }
-      res.send('{"updated":' + updated.toISOString() + '}');
+      res.send('{"updated":"' + updated.toISOString() + '"}');
     } else {
       // Could not find the menus
       res.send(404);
