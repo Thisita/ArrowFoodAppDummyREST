@@ -31,7 +31,7 @@ function userProfileUpdated(req, res) {
     User.findOne({'username' : req.session.username}, 'updated' , function(err, user) {
       if(user) {
         // Send profile
-        res.send('{"updated":' + user.updated + '}');
+        res.send('{"updated":"' + user.updated.toISOString() + '"}');
       } else {
         // Could not find the profile
         res.send(404);
