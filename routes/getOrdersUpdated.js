@@ -34,7 +34,7 @@ function ordersUpdated(req, res) {
             updated = orders[i].updated;
           }
         }
-        res.send('{"updated":' + updated + '}');
+        res.send('{"updated":"' + updated.toISOString() + '"}');
       } else {
         // Could not find the orders
         res.send(404);
