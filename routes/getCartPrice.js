@@ -24,8 +24,15 @@ var mongoose = require('mongoose');
 var Cart = mongoose.model('Cart');
 var Menu = mongoose.model('Menu');
 
-// consts
-var deliveryFee = 5.00; // The service cost :)
+// Returns the delivery fee based on Arrow Food Couriers service 
+// sliding scale
+function getDeliveryFee(x) {
+  if(x <= 9.99) return 3.99;
+  else if(x <= 19.99) return 4.99;
+  else if(x <= 39.99) return 5.99;
+  else if(x <= 69.99) return 6.99;
+  else return 10.00;
+}
 
 // Route handling function
 function getCartPrice(req, res) {
@@ -52,7 +59,7 @@ function getCartPrice(req, res) {
                 }
             }
           }
-          cart.total += deliveryFee;
+          cart.total += getDeliveryFee(cart.total);
           cart.updated = Date.now();
           // save the cart total
           cart.save(function(err, cart, count) {
