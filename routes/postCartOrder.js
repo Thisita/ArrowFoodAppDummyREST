@@ -49,7 +49,7 @@ function cartOrder(req, res) {
 				var json = req.body;
 				var newOrder = new Order();
 				newOrder.username = req.session.username;
-				newOrder.cart = req.session.cart;
+				newOrder.cart = cart;
 				newOrder.shipping = json.shipping;
 				newOrder.billing = json.billing;
 				
