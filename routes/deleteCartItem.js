@@ -89,11 +89,6 @@ function cart(req, res) {
 											break;
 										}
 									}
-									else
-									{
-										console.log("User logged in, but no match found for given params in cart.");
-										res.send(404);
-									}
 								}
 								// Break out if the item was decremented
 								if (deleted) {
