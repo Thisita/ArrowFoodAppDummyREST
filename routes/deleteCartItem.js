@@ -44,13 +44,13 @@ function cart(req, res) {
 							// Check that the item actually exists in the menu
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
-									console.log('DEBUG: cart fields [' + [cart.items[i].restaurant,cart.items[i].menu,cart.items[i].item] + ']');
-									if(cart.items[i].restaurant == req.params.restaurant && cart.items[i].menu == req.params.menu && cart.items[i].item == req.params.item)
+									console.log('DEBUG: cart fields [' + [cart.items[j].restaurant,cart.items[j].menu,cart.items[j].item] + ']');
+									if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item)
 									{
 										// Check the quantity
-										if(cart.items[i].quantity > 1) {
-											// Decrement quantity of there is more than one
-											--cart.items[i].quantity;
+										if(cart.items[j].quantity > 1) {
+											// Decrement quantity if there is more than one
+											--cart.items[j].quantity;
 											
 											// Save the cart
 											cart.markModified('items');
@@ -70,7 +70,7 @@ function cart(req, res) {
 											break;
 										} else {
 											// Remove the item completely from the cart
-											cart.items.splice(i, 1);
+											cart.items.splice(j, 1);
 											
 											// Save the cart
 											cart.markModified('items');
