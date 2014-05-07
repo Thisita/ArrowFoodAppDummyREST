@@ -89,6 +89,7 @@ function cart(req, res) {
 									break;
 								} else {
 									// If the item was not found in the cart
+									console.log("Item not found in cart.");
 									res.send(404);
 								}
 							}
