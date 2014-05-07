@@ -26,6 +26,11 @@ var Menu = mongoose.model('Menu');
 
 // Route handling function
 function cart(req, res) {
+	req.params.restaurant = decodeURIComponent(req.params.restaurant);
+	req.params.menu = decodeURIComponent(req.params.menu);
+	req.params.item = decodeURIComponent(req.params.item);
+	// debug log
+	console.log('DEBUG: deleteCartItem [' + [req.params.restaurant,req.params.menu,req.params.item] + ']');
 	// Boolean for knowing if the item has been deleted
 	var deleted = false;
 	// Check if the user is signed in
