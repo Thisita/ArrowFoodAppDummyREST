@@ -44,47 +44,55 @@ function cart(req, res) {
 							// Check that the item actually exists in the menu
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
-									// Check the quantity
-									if(cart.items[j].quantity > 1) {
-										// Decrement quantity of there is more than one
-										--cart.items[j].quantity;
-										
-										// Save the cart
-										cart.markModified('items');
-										cart.updated = new Date();
-										cart.save(function(err) {
-										 if(err) {
-											console.error("Error: Failed to delete cart item [" + err + "]");
-											res.send(500);
-											} else {
-												// Send success
-												res.send('{"success":true}');
-											}
-										});
-										
-										// Set boolean to true to escape the other for loop
-										deleted = true;
-										break;
-									} else {
-										// Remove the item completely from the cart
-										cart.items.splice(j, 1);
-										
-										// Save the cart
-										cart.markModified('items');
-										cart.updated = new Date();
-										cart.save(function(err) {
-										 if(err) {
-											console.error("Error: Failed to delete cart item [" + err + "]");
-											res.send(500);
-											} else {
-												// Send success
-												res.send('{"success":true}');
-											}
-										});
-										
-										// Set boolean to true to escape the other for loop
-										deleted = true;
-										break;
+									if(cart.items[i].restaurant == req.params.restaurant && cart.items[i].menu == req.params.menu && cart.items[i].item == req.params.item)
+									{
+										// Check the quantity
+										if(cart.items[i].quantity > 1) {
+											// Decrement quantity of there is more than one
+											--cart.items[i].quantity;
+											
+											// Save the cart
+											cart.markModified('items');
+											cart.updated = new Date();
+											cart.save(function(err) {
+											 if(err) {
+												console.error("Error: Failed to delete cart item [" + err + "]");
+												res.send(500);
+												} else {
+													// Send success
+													res.send('{"success":true}');
+												}
+											});
+											
+											// Set boolean to true to escape the other for loop
+											deleted = true;
+											break;
+										} else {
+											// Remove the item completely from the cart
+											cart.items.splice(i, 1);
+											
+											// Save the cart
+											cart.markModified('items');
+											cart.updated = new Date();
+											cart.save(function(err) {
+											 if(err) {
+												console.error("Error: Failed to delete cart item [" + err + "]");
+												res.send(500);
+												} else {
+													// Send success
+													res.send('{"success":true}');
+												}
+											});
+											
+											// Set boolean to true to escape the other for loop
+											deleted = true;
+											break;
+										}
+									}
+									else
+									{
+										console.log("User logged in, but no match found for given params in cart.");
+										res.send(404);
 									}
 								}
 								// Break out if the item was decremented
