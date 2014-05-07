@@ -59,7 +59,6 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
-										console.log("Deleted set to " + deleted + " for scenario user logged in, quantity > 1.");
 										break;
 									} else {
 										// Remove the item completely from the cart
@@ -80,7 +79,6 @@ function cart(req, res) {
 										
 										// Set boolean to true to escape the other for loop
 										deleted = true;
-										console.log("Deleted set to " + deleted + " for scenario user logged in, quantity <= 1.");
 										break;
 									}
 								}
