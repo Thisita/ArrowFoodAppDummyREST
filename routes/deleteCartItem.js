@@ -45,9 +45,9 @@ function cart(req, res) {
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
 									// Check the quantity
-									if(cart.items[i].quantity > 1) {
+									if(cart.items[j].quantity > 1) {
 										// Decrement quantity of there is more than one
-										--cart.items[i].quantity;
+										--cart.items[j].quantity;
 										
 										// Save the cart
 										cart.markModified('items');
@@ -67,7 +67,7 @@ function cart(req, res) {
 										break;
 									} else {
 										// Remove the item completely from the cart
-										cart.items.splice(i, 1);
+										cart.items.splice(j, 1);
 										
 										// Save the cart
 										cart.markModified('items');
