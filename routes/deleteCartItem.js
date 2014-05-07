@@ -89,18 +89,20 @@ function cart(req, res) {
 									break;
 								} else {
 									// If the item was not found in the cart
-									console.log("Item not found in cart.");
+									console.log("User logged in, but item not found in cart.");
 									res.send(404);
 								}
 							}
 						}
 					} else {
 						// Item not found
+						console.log("User logged in, but item not found.");
 						res.send(404);
 					}
 				});
 			} else {
 				// Could not find the cart
+				console.log("User logged in, but could not find cart.");
 				res.send(404);
 			}
 		});
@@ -144,17 +146,20 @@ function cart(req, res) {
 								break;
 							} else {
 								// If the item was not found in the cart
+								console.log("User not logged in & could not find item in cart.");
 								res.send(404);
 							}
 						}
 					}
 				} else {
 					// Item not found
+					console.log("User not logged in & could not find item.");
 					res.send(404);
 				}
 			});
 		} else {
 			// Could not find the cart
+			console.log("User not logged in & could not find cart.");
 			res.send(404);
 		}
 	}
