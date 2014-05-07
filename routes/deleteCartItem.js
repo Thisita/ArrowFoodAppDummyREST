@@ -44,6 +44,7 @@ function cart(req, res) {
 							// Check that the item actually exists in the menu
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
+									console.log('DEBUG: cart fields [' + [cart.items[i].restaurant,cart.items[i].menu,cart.items[i].item] + ']');
 									if(cart.items[i].restaurant == req.params.restaurant && cart.items[i].menu == req.params.menu && cart.items[i].item == req.params.item)
 									{
 										// Check the quantity
