@@ -170,5 +170,5 @@ function cart(req, res) {
 
 // Export the route association function
 module.exports = function(app) {
-  app.delete('/cart/:restaurant/:menu/:item/', cart);
+  app.delete('/cart/:restaurant/:menu/:item', cart);
 };
