@@ -46,7 +46,7 @@ function cart(req, res) {
 										
 										// Save the cart
 										cart.markModified('items');
-                    cart.updated = new Date();
+										cart.updated = new Date();
 										cart.save(function(err) {
 										 if(err) {
 											console.error("Error: Failed to delete cart item [" + err + "]");
@@ -66,7 +66,7 @@ function cart(req, res) {
 										
 										// Save the cart
 										cart.markModified('items');
-                    cart.updated = new Date();
+										cart.updated = new Date();
 										cart.save(function(err) {
 										 if(err) {
 											console.error("Error: Failed to delete cart item [" + err + "]");
