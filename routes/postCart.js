@@ -111,7 +111,7 @@ function addCart(req, res) {
 										item: req.params.item,
 										itemOptions: json,
 										quantity: req.params.quantity});
-								  cart.updated = new Date();
+									cart.updated = new Date();
 									// Save the cart
 									cart.markModified('items');
 									cart.save(function(err, cart, count) {
@@ -142,7 +142,7 @@ function addCart(req, res) {
 				newCart.items.push({
 					restaurant: req.params.restaurant,
 					menu: req.params.menu,
-          item: req.params.item,
+					item: req.params.item,
 					itemOptions: json,
 					quantity: req.params.quantity});
 				// Save the cart
@@ -182,7 +182,7 @@ function addCart(req, res) {
 							}
 							// Break out if the item was incremented
 							if (added) {
-                req.session.cart.updated = new Date();
+							req.session.cart.updated = new Date();
 								break;
 							} else {
 								// If the item was not found in the cart add a new one
@@ -190,7 +190,7 @@ function addCart(req, res) {
 								req.session.cart.items.push({
 									restaurant: req.params.restaurant,
 									menu: req.params.menu,
-                  item: req.params.item,
+									item: req.params.item,
 									itemOptions: json,
 									quantity: req.params.quantity});
 								req.session.cart.updated = new Date();
