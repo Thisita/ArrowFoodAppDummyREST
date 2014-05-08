@@ -78,7 +78,7 @@ function addCart(req, res) {
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
 									// Check if that item is already in the cart
-									if(cart.items[j] == req.params.item) {
+									if(cart.items[j].item == req.params.item) {
 										// Increment the quantity
 										cart.items[i].quantity += req.params.quantity;
 										cart.updated = new Date();
