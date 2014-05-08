@@ -80,7 +80,7 @@ function addCart(req, res) {
 									// Check if that item is already in the cart
 									if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item) {
 										// Increment the quantity
-										cart.items[j].quantity += req.params.quantity;
+										cart.items[j].quantity = parseFloat(cart.items[j].quantity) + parseFloat(req.params.quantity);
 										cart.updated = new Date();
 										// Save the cart
 										cart.markModified('items');
