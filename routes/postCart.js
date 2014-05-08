@@ -78,9 +78,9 @@ function addCart(req, res) {
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
 									// Check if that item is already in the cart
-									if(cart.items[j].item == req.params.item) {
+									if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item) {
 										// Increment the quantity
-										cart.items[i].quantity += req.params.quantity;
+										cart.items[j].quantity += req.params.quantity;
 										cart.updated = new Date();
 										// Save the cart
 										cart.markModified('items');
@@ -108,7 +108,7 @@ function addCart(req, res) {
 									cart.items.push({
 										restaurant: req.params.restaurant,
 										menu: req.params.menu,
-                    item: req.params.item,
+										item: req.params.item,
 										itemOptions: json,
 										quantity: req.params.quantity});
 								  cart.updated = new Date();
