@@ -43,21 +43,10 @@ function getCartPrice(req, res) {
         // Get the menu data
         Menu.find({}, function(err, menus) {
           cart.total = 0.0;
-          for(var i = 0; i < cart.items.length; ++i) {
-            for(var j = 0; j < menus.length; ++j) {
-              if(cart.items[i].restaurant === menus[j].restaurant
-                && cart.items[i].menu === menus[j].name) {
-                  for(var k = 0; k < menus[j].items.length; ++k) {
-                    if(cart.items[i].item === menus[j].items[k].name) {
-                      cart.total += menus[j].items[k].price;
-                      // break out of items loop
-                      break;
-                    }
-                  }
-                  // break out of this loop
-                  break;
-                }
-            }
+          for(var i = 0; i < cart.items.length; ++i) 
+		  {
+			cart.total += cart.items[i].total;
+            
           }
           cart.total += getDeliveryFee(cart.total);
           cart.updated = Date.now();
