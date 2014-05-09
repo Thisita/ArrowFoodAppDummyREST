@@ -26,6 +26,11 @@ var Menu = mongoose.model('Menu');
 
 // Route handling function
 function cart(req, res) {
+	req.params.restaurant = decodeURIComponent(req.params.restaurant);
+	req.params.menu = decodeURIComponent(req.params.menu);
+	req.params.item = decodeURIComponent(req.params.item);
+	// debug log
+	console.log('DEBUG: deleteCartItemQuantity [' + [req.params.restaurant,req.params.menu,req.params.item] + ']');
 	// Boolean for knowing if the item has been deleted
 	var deleted = false;
 	// Check if the user is signed in
@@ -39,49 +44,52 @@ function cart(req, res) {
 							// Check that the item actually exists in the menu
 							if(menu.items[i].name == req.params.item) {
 								for (var j = 0; j < cart.items.length; ++j) {
-									// Check the quantity
-									if(cart.items[j].quantity > req.params.quantity) {
-										// Decrement quantity of there is more than one
-										cart.items[j].quantity -= req.params.quantity;
-										
-										// Save the cart
-										cart.markModified('items');
-										cart.updated = new Date();
-										cart.save(function(err) {
-										 if(err) {
-											console.error("Error: Failed to delete cart item quantity [" + err + "]");
-											res.send(500);
+									if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item)
+										{
+											// Check the quantity
+											if(cart.items[j].quantity > req.params.quantity) {
+												// Decrement quantity of there is more than one
+												cart.items[j].quantity -= req.params.quantity;
+												
+												// Save the cart
+												cart.markModified('items');
+												cart.updated = new Date();
+												cart.save(function(err) {
+												 if(err) {
+													console.error("Error: Failed to delete cart item quantity [" + err + "]");
+													res.send(500);
+													} else {
+														// Send success
+														res.send('{"success":true}');
+													}
+												});
+												
+												// Set boolean to true to escape the other for loop
+												deleted = true;
+												break;
 											} else {
-												// Send success
-												res.send('{"success":true}');
+												// Remove the item completely from the cart
+												cart.items.splice(j, 1);
+												
+												// Save the cart
+												cart.markModified('items');
+												cart.updated = new Date();
+												cart.save(function(err) {
+												 if(err) {
+													console.error("Error: Failed to delete cart item quantity [" + err + "]");
+													res.send(500);
+													} else {
+														// Send success
+														res.send('{"success":true}');
+													}
+												});
+												
+												// Set boolean to true to escape the other for loop
+												deleted = true;
+												break;
 											}
-										});
-										
-										// Set boolean to true to escape the other for loop
-										deleted = true;
-										break;
-									} else {
-										// Remove the item completely from the cart
-										cart.items.splice(i, 1);
-										
-										// Save the cart
-										cart.markModified('items');
-										cart.updated = new Date();
-										cart.save(function(err) {
-										 if(err) {
-											console.error("Error: Failed to delete cart item quantity [" + err + "]");
-											res.send(500);
-											} else {
-												// Send success
-												res.send('{"success":true}');
-											}
-										});
-										
-										// Set boolean to true to escape the other for loop
-										deleted = true;
-										break;
+										}
 									}
-								}
 								// Break out if the item was decremented
 								if (deleted) {
 									break;
