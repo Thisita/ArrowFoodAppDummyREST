@@ -47,91 +47,91 @@ var Menu = mongoose.model('Menu');
  */
 // Route handling function
 function addCart(req, res) {
-  req.params.restaurant = decodeURIComponent(req.params.restaurant);
-  req.params.menu = decodeURIComponent(req.params.menu);
-  req.params.item = decodeURIComponent(req.params.item);
-  // debug log
-  console.log('DEBUG: postCart [' + [req.params.restaurant,req.params.menu,req.params.item] + ']');
+	req.params.restaurant = decodeURIComponent(req.params.restaurant);
+	req.params.menu = decodeURIComponent(req.params.menu);
+	req.params.item = decodeURIComponent(req.params.item);
+	// debug log
+	console.log('DEBUG: postCart [' + [req.params.restaurant,req.params.menu,req.params.item] + ']');
 	// Boolean for knowing if the item has been added
 	var added = false;
 	// Check if the user is signed in
 	if(req.session.authenticated) {
 		Cart.findOne({'username' : req.session.username}, function(err, cart) {
-      if(err) {
-        // log the error
-        console.log('ERROR: ' + err);
-        // send 500
-        res.send(500, err);
-      }
+			if(err) {
+			// log the error
+			console.log('ERROR: ' + err);
+			// send 500
+			res.send(500, err);
+			}
 			if(cart) {
 				// Check that the menu exists
 				Menu.findOne({'restaurant' : req.params.restaurant, 'name' : req.params.menu}, function(err, menu){
-          if(err) {
-            // log the error
-            console.log('ERROR: ' + err);
-            // send 500
-            res.send(500, err);
-          }
-					if(menu) {
-						for (var i = 0; i < menu.items.length; ++i) {
-							// Check that the item actually exists in the menu
-							if(menu.items[i].name == req.params.item) {
-								for (var j = 0; j < cart.items.length; ++j) {
-									// Check if that item is already in the cart
-									if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item) {
-										// Increment the quantity
-										cart.items[j].quantity = parseFloat(cart.items[j].quantity) + parseFloat(req.params.quantity);
-										cart.updated = new Date();
-										// Save the cart
-										cart.markModified('items');
-										cart.save(function(err) {
-										 if(err) {
-											console.error("Error: Failed to save cart addition [" + err + "]");
-											res.send(500);
-											} else {
-												// Send success
-												res.send('{"success":true}');
-											}
-										});
-										
-										// Set boolean to true to escape the other for loop
-										added = true;
-										break;
-									}
-								}
-								// Break out if the item was incremented
-								if (added) {
-									break;
-								} else {
-									// If the item was not found in the cart add a new one
-									var json = req.body;
-									cart.items.push({
-										restaurant: req.params.restaurant,
-										menu: req.params.menu,
-										item: req.params.item,
-										itemOptions: json,
-										quantity: req.params.quantity});
+				if(err) {
+				// log the error
+				console.log('ERROR: ' + err);
+				// send 500
+				res.send(500, err);
+				}
+				if(menu) {
+					for (var i = 0; i < menu.items.length; ++i) {
+						// Check that the item actually exists in the menu
+						if(menu.items[i].name == req.params.item) {
+							for (var j = 0; j < cart.items.length; ++j) {
+								// Check if that item is already in the cart
+								if(cart.items[j].restaurant == req.params.restaurant && cart.items[j].menu == req.params.menu && cart.items[j].item == req.params.item) {
+									// Increment the quantity
+									cart.items[j].quantity = parseFloat(cart.items[j].quantity) + parseFloat(req.params.quantity);
 									cart.updated = new Date();
 									// Save the cart
 									cart.markModified('items');
-									cart.save(function(err, cart, count) {
-										 if(err || count !== 1) {
-											console.error("Error: Failed to save cart addition [" + err + "]");
-											res.send(500);
-                    } else {
-                      // Send success
-                      res.send('{"success":true}');
-                    }
+									cart.save(function(err) {
+									 if(err) {
+										console.error("Error: Failed to save cart addition [" + err + "]");
+										res.send(500);
+										} else {
+											// Send success
+											res.send('{"success":true}');
+										}
 									});
+									
+									// Set boolean to true to escape the other for loop
+									added = true;
 									break;
 								}
 							}
+							// Break out if the item was incremented
+							if (added) {
+								break;
+							} else {
+								// If the item was not found in the cart add a new one
+								var json = req.body;
+								cart.items.push({
+									restaurant: req.params.restaurant,
+									menu: req.params.menu,
+									item: req.params.item,
+									itemOptions: json,
+									quantity: req.params.quantity});
+								cart.updated = new Date();
+								// Save the cart
+								cart.markModified('items');
+								cart.save(function(err, cart, count) {
+									if(err || count !== 1) {
+										console.error("Error: Failed to save cart addition [" + err + "]");
+										res.send(500);
+									} else {
+										// Send success
+										res.send('{"success":true}');
+									}
+								});
+								break;
+							}
 						}
-					} else {
-						// Item not found
-						res.send(404);
 					}
-				});
+				} else {
+					// Item not found
+					res.send(404);
+				}
+			});
 			} else {
 				// Create the cart
 				var newCart = new Cart();
