@@ -27,11 +27,11 @@ var Menu = mongoose.model('Menu');
 // Returns the delivery fee based on Arrow Food Couriers service 
 // sliding scale
 function getDeliveryFee(x) {
-  if(x >= 5.00) return 0.00;
-  else if(x <= 9.99) return 3.99;
-  else if(x <= 19.99) return 4.99;
-  else if(x <= 39.99) return 5.99;
-  else if(x <= 69.99) return 6.99;
+  if(x >= 5.00) return 3.99;
+  else if(x >= 10.00) return 4.99;
+  else if(x >= 20.00) return 5.99;
+  else if(x >= 40.00) return 6.99;
+  else if(x >= 70.00) return 10.00;
   else return 10.00;
 }
 
