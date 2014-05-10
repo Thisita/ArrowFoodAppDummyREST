@@ -32,7 +32,7 @@ function getDeliveryFee(x) {
   else if(x >= 20.00) return 5.99;
   else if(x >= 40.00) return 6.99;
   else if(x >= 70.00) return 10.00;
-  else return 10.00;
+  else return null;
 }
 
 // Route handling function
@@ -49,21 +49,31 @@ function getCartPrice(req, res) {
 			cart.total += cart.items[i].total;
             
           }
-          cart.total += getDeliveryFee(cart.total);
-          cart.updated = Date.now();
-          // save the cart total
-          cart.save(function(err, cart, count) {
-            // check for err
-            if(err || count !== 1) {
-              // log
-              console.log('ERROR: Failed to save cart total [' + err + ']');
-              // send the bad news
-              res.send(500, err);
-            } else {
-              // send the data
-              res.send(JSON.stringify(cart));
-            }
-          })
+		  var deliveryFee = 0.0;
+		  deliveryFee = getDeliveryFee(cart.total);
+		  if(deliveryFee == null)
+		  {
+			// forbidden to purchase less than a certain amount in an order
+			res.send(403);
+		  }
+		  else
+		  {
+			  cart.total += deliveryFee;
+			  cart.updated = Date.now();
+			  // save the cart total
+			  cart.save(function(err, cart, count) {
+				// check for err
+				if(err || count !== 1) {
+				  // log
+				  console.log('ERROR: Failed to save cart total [' + err + ']');
+				  // send the bad news
+				  res.send(500, err);
+				} else {
+				  // send the data
+				  res.send(JSON.stringify(cart));
+				}
+			  })
+		  }
         });
       } else {
         // Could not find the cart
