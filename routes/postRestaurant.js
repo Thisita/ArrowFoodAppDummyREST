@@ -25,6 +25,7 @@ var Restaurant = mongoose.model('Restaurant');
 
 // Route handling function
 function editRestaurant(req, res) {
+  console.log("body: " + req.body);
   // make sure the user is authenticated and an admin
   if(true) {
   //if(req.session.authenticated && req.session.admin) {
